@@ -3,10 +3,10 @@ name: Lint, Test and Build
 on:
   push:
     branches:
-      - main
+      - test-later
   pull_request:
     branches:
-      - main
+      - test-later
   workflow_dispatch:
 
 permissions:
