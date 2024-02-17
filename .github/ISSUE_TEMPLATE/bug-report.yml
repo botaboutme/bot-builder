@@ -19,7 +19,7 @@ body:
     id: variant
     attributes:
       label: Product Variant
-      description: What variant of Reactive Resume are you using?
+      description: What variant of bot-builder are you using?
       options:
         - botaboutme.com
     validations:
