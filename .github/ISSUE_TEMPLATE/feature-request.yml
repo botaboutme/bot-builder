@@ -1,10 +1,10 @@
 name: ✨ Feature Request
 
-description: Suggest an feature or idea that you would like to see in Reactive Resume
+description: Suggest an feature or idea that you would like to see in Bot-Builder
 
 title: "[Feature] <title>"
 labels: [enhancement, v4, needs triage]
-assignees: "AmruthPillai"
+assignees: "gatolgaj"
 
 body:
   - type: checkboxes
