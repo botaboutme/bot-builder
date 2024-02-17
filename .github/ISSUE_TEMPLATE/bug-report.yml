@@ -1,10 +1,10 @@
 name: 🐞 Bug Report
 
-description: Create a bug report to help improve Reactive Resume
+description: Create a bug report to help improve Bot-Builder
 
 title: "[Bug] <title>"
 labels: [bug, v4, needs triage]
-assignees: "AmruthPillai"
+assignees: "gatolgaj"
 
 body:
   - type: checkboxes
@@ -21,8 +21,7 @@ body:
       label: Product Variant
       description: What variant of Reactive Resume are you using?
       options:
-        - Cloud (http://rxresu.me)
-        - Self-Hosted
+        - botaboutme.com
     validations:
       required: true
 
