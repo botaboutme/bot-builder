@@ -1,5 +1,5 @@
 const STEPS = [
-  { title: "Update a resume", text: "or create from scratch" },
+  { title: "Upload your resume", text: "or create from scratch" },
   { title: "Preview your details", text: "and make edits" },
   { title: "Publish your bubble", text: "and let the bot do the magic" },
 ];
