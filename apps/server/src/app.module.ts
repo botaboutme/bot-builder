@@ -7,6 +7,7 @@ import { join } from "path";
 
 import { AuthModule } from "./auth/auth.module";
 import { CacheModule } from "./cache/cache.module";
+import { ChatModule } from "./chat/chat.module";
 import { ConfigModule } from "./config/config.module";
 import { ContributorsModule } from "./contributors/contributors.module";
 import { DatabaseModule } from "./database/database.module";
@@ -21,6 +22,8 @@ import { UtilsModule } from "./utils/utils.module";
 
 @Module({
   imports: [
+    // Chat Module
+    ChatModule,
     // Core Modules
     ConfigModule,
     DatabaseModule,
