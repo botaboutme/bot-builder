@@ -14,8 +14,8 @@ export const HeroCTA = () => {
   if (isLoggedIn) {
     return (
       <>
-        <Button asChild size="lg">
-          <Link to="/dashboard">{t`Go to Dashboard`}</Link>
+        <Button className="btn-bckMain" asChild size="lg">
+          <Link className="btn-bckMain" to="/dashboard">{t`Go to Dashboard`}</Link>
         </Button>
 
         <Button size="lg" variant="link" onClick={() => logout()}>
