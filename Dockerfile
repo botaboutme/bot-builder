@@ -3,7 +3,7 @@ FROM node:lts-bullseye-slim AS base
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-ARG NX_CLOUD_ACCESS_TOKEN
+# ARG NX_CLOUD_ACCESS_TOKEN
 
 RUN corepack enable
 
@@ -12,7 +12,7 @@ WORKDIR /app
 # --- Build Image ---
 FROM base AS build
 
-ENV NX_CLOUD_ACCESS_TOKEN=$NX_CLOUD_ACCESS_TOKEN
+# ENV NX_CLOUD_ACCESS_TOKEN=$NX_CLOUD_ACCESS_TOKEN
 
 COPY .npmrc package.json pnpm-lock.yaml ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
