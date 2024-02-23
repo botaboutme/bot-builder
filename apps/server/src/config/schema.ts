@@ -45,7 +45,11 @@ export const configSchema = z.object({
     .transform((s) => s !== "false" && s !== "0"),
 
   // Redis
-  REDIS_URL: z.string().url().regex(/^(redis|rediss):\/\//, "URL must start with 'redis://' or 'rediss://'").optional(),
+  REDIS_URL: z
+    .string()
+    .url()
+    .regex(/^(redis|rediss):\/\//, "URL must start with 'redis://' or 'rediss://'")
+    .optional(),
 
   // Sentry
   VITE_SENTRY_DSN: z.string().url().startsWith("https://").optional(),
