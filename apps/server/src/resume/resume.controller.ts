@@ -158,7 +158,7 @@ export class ResumeController {
   @UseGuards(TwoFactorGuard) // Assuming you want the upload to be protected by 2FA as well
   @UseInterceptors(
     FileInterceptor("file", {
-      fileFilter: (req, file, callback) => {
+      fileFilter: (_req, file, callback) => {
         const allowedTypes = [
           "application/pdf",
           "application/msword",
@@ -171,7 +171,7 @@ export class ResumeController {
       },
     }),
   )
-  async uploadResume(@UploadedFile() file: Express.Multer.File, @User() user: UserEntity) {
+  async uploadResume(@UploadedFile() _file: Express.Multer.File, @User() _user: UserEntity) {
     // Assuming you have a method in your ResumeService to handle the file processing
     try {
       //const result = await this.resumeService.processUploadedResume(file, user.id);
