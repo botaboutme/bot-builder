@@ -31,7 +31,7 @@ import { useNavigate } from "react-router-dom";
 import { useResumePreview } from "@/client/services/resume/preview";
 import { useDialog } from "@/client/stores/dialog";
 
-import { BaseListItem } from "./base-item";
+import { BaseCentralListItem } from "./base-item-central";
 
 type Props = {
   resume: ResumeDto;
@@ -137,16 +137,28 @@ export const ResumeListItem = ({ resume }: Props) => {
     </DropdownMenu>
   );
 
+  const statsDetails = (
+    <>
+      <p className="hidden text-xs opacity-75 sm:block">
+        Profile Views: <b>1000</b>
+      </p>
+      <p className="hidden text-xs opacity-75 sm:block">
+        Bot Chats: <b>20</b>
+      </p>
+    </>
+  );
+
   return (
     <ContextMenu>
       <ContextMenuTrigger className="even:bg-secondary/20">
         <HoverCard>
           <HoverCardTrigger>
-            <BaseListItem
+            <BaseCentralListItem
               onClick={onOpen}
               className="group"
               title={resume.title}
               description={t`Last updated ${lastUpdated}`}
+              central={statsDetails}
               end={dropdownMenu}
             />
           </HoverCardTrigger>
