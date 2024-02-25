@@ -171,17 +171,16 @@ export class ResumeController {
       },
     }),
   )
-  async uploadResume(@UploadedFile() _file: Express.Multer.File, @User() _user: UserEntity) {
+  async uploadResume(@UploadedFile() file: Express.Multer.File, @User() user: UserEntity) {
     // Assuming you have a method in your ResumeService to handle the file processing
     try {
-      //const result = await this.resumeService.processUploadedResume(file, user.id);
-      // const parser = new ReactiveResumeParser();
-      // const isValid = parser.validate(result);
-      // const parsedData = parser.convert(result as ResumeData);
-      // console.log(isValid);
+      const result = await this.resumeService.processUploadedResume(file, user.id);
+      const parser = new ReactiveResumeParser();
+      const isValid = parser.validate(result);
+      const parsedData = parser.convert(result as ResumeData);
+      console.log(isValid);
 
-      // return await this.resumeService.import(user.id, { data: parsedData });
-      return {};
+      return await this.resumeService.import(user.id, { data: parsedData });
     } catch (error) {
       Logger.error(error);
       throw new InternalServerErrorException("Failed to process resume");

@@ -34,7 +34,7 @@ export class LinkedInParser implements Parser<JSZip, LinkedIn> {
       throw new Error("ParserError: There were no files found inside the zip archive.");
     }
 
-    return data;
+    return data as unknown as JSZip;
   }
 
   async validate(data: JSZip) {

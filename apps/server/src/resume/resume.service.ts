@@ -7,7 +7,7 @@ import {
   InternalServerErrorException,
   Logger,
 } from "@nestjs/common";
-import { Prisma } from "@prisma/client";
+import { PrismaClient as Prisma } from "@prisma/client";
 import { CreateResumeDto, ImportResumeDto, ResumeDto, UpdateResumeDto } from "@reactive-resume/dto";
 import { defaultResumeData, ResumeData } from "@reactive-resume/schema";
 import { resumeDataSchema } from "@reactive-resume/schema";
@@ -217,9 +217,9 @@ export class ResumeService {
 
     const chain = RunnableSequence.from([
       PromptTemplate.fromTemplate(
-        "Extract as much data as possible from the given data.\n{format_instructions}\n{question} \n Make sure that you return a valid JSON.",
+        "Extract as much data as possible from the given data.\n{format_instructions}\n{question}. \n Make sure that all the id feilds are unique strings.\n Make sure that you return a valid JSON. \n Remove Invalid ",
       ),
-      new OpenAI({ modelName: "gpt-3.5-turbo-0125", temperature: 0 }),
+      new OpenAI({ modelName: "gpt-4-turbo-preview", temperature: 0 }),
       parser,
     ]);
 
@@ -237,7 +237,7 @@ export class ResumeService {
         format_instructions: parser.getFormatInstructions(),
       });
 
-      console.log(`Extracted data for user ${userId}: ${JSON.stringify(response)}`);
+      console.log(`Extracted data for user ${userId}: ${response}`);
 
       return response;
     } catch (error) {
