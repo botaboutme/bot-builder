@@ -19,11 +19,13 @@ import { StorageModule } from "./storage/storage.module";
 import { TranslationModule } from "./translation/translation.module";
 import { UserModule } from "./user/user.module";
 import { UtilsModule } from "./utils/utils.module";
+import { AdminChatsModule } from "./adminchat/adminchat.module";
 
 @Module({
   imports: [
     // Chat Module
     ChatModule,
+    AdminChatsModule,
     // Core Modules
     ConfigModule,
     DatabaseModule,
