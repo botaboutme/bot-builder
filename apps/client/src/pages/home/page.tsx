@@ -31,14 +31,15 @@ export const HomePage = () => {
       </Helmet>
 
       <HeroSection />
-      <LogoCloudSection />
+
+      {/* <LogoCloudSection />
       <StatisticsSection />
       <FeaturesSection />
       <TemplatesSection />
       <TestimonialsSection />
       <SupportSection />
       <FAQSection />
-      <ContributorsSection />
+      <ContributorsSection /> */}
     </main>
   );
 };
