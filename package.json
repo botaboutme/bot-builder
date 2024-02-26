@@ -1,17 +1,13 @@
 {
   "name": "@reactive-resume/source",
   "description": "A free and open-source resume builder that simplifies the process of creating, updating, and sharing your resume.",
-  "version": "4.0.5",
+  "version": "1.0.1",
   "license": "MIT",
   "private": true,
   "author": {
-    "name": "Amruth Pillai",
-    "url": "https://amruthpillai.com",
-    "email": "hello@amruthpillai.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/AmruthPillai/Reactive-Resume.git"
+    "name": "admin",
+    "url": "https://botaboutme.com",
+    "email": "admin@botaboutme.com"
   },
   "scripts": {
     "dev": "nx run-many -t serve",

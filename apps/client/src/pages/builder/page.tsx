@@ -36,7 +36,7 @@ export const BuilderPage = () => {
     <>
       <Helmet>
         <title>
-          {title} - {t`Reactive Resume`}
+          {title} - {t`Bot About Me`}
         </title>
       </Helmet>
 
