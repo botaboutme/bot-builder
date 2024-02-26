@@ -7,7 +7,7 @@ import {
   InternalServerErrorException,
   Logger,
 } from "@nestjs/common";
-import { PrismaClient as Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { CreateResumeDto, ImportResumeDto, ResumeDto, UpdateResumeDto } from "@reactive-resume/dto";
 import { defaultResumeData, ResumeData } from "@reactive-resume/schema";
 import { resumeDataSchema } from "@reactive-resume/schema";
