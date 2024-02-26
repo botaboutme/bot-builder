@@ -4,15 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import { CHAT_KEY } from "@/client/constants/query-keys";
 
 export const findChatSessions = async (data: { userId: string }) => {
-    console.log("&&&");
-    const response = await axios.get<ChatsDto[]>(`/adminchats/sessions/${data.userId}`);
-    console.log("###" + response.data);
+    const response = await axios.get<ChatsDto[]>(`/chat/sessions/${data.userId}`);
     return response.data;
   };
 
   export const useChatSessions = (userId: string) => {
-
-    console.log("YYY");
     const {
       error,
       isPending: loading,
