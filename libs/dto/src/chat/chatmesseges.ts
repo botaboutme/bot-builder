@@ -4,11 +4,11 @@ import { z } from "nestjs-zod/z";
 
 export const chatMessegesSchema = z.object({
   _id: idSchema,
-  userId: z.string().nullable(),
-  participants: z.array(z.string()).default([]),
+  chat_id: z.string().nullable(),
+  sender_id: z.string().nullable(),
+  receiver_id: z.string().nullable(),
+  text: z.string().nullable(),
   created_at: z.date().nullable(),
-  last_message_at: z.date().nullable(),
-  last_message_preview:z.string().nullable(),
 });
 
 export class ChatMessegesDto extends createZodDto(chatMessegesSchema) {}
