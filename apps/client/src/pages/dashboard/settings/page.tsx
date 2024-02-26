@@ -13,7 +13,7 @@ export const SettingsPage = () => (
   <>
     <Helmet>
       <title>
-        {t`Settings`} - {t`Reactive Resume`}
+        {t`Settings`} - {t`Bot About Me`}
       </title>
     </Helmet>
 

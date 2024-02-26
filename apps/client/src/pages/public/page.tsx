@@ -69,7 +69,7 @@ export const PublicResumePage = () => {
     <div>
       <Helmet>
         <title>
-          {title} - {t`Reactive Resume`}
+          {title} - {t`Bot About Me`}
         </title>
       </Helmet>
 
@@ -85,16 +85,6 @@ export const PublicResumePage = () => {
           style={{ width: `${pageSizeMap[format].width}mm`, overflow: "hidden" }}
         />
         <ChatComponent />
-      </div>
-
-      <div className="flex justify-center py-10 opacity-50 print:hidden">
-        <Link to="/">
-          <Button size="sm" variant="ghost" className="space-x-1.5 text-xs font-normal">
-            <span>{t`Built with`}</span>
-            <Icon size={12} />
-            <span>{t`Reactive Resume`}</span>
-          </Button>
-        </Link>
       </div>
 
       <div className="fixed bottom-5 right-5 print:hidden">
