@@ -3,12 +3,10 @@ import { createZodDto } from "nestjs-zod/dto";
 import { z } from "nestjs-zod/z";
 
 export const chatsSchema = z.object({
-  _id: idSchema,
-  userId: z.string().nullable(),
-  participants: z.array(z.string()).default([]),
+  id: idSchema,
+  resumeId: z.string().nullable(),
   created_at: z.date().nullable(),
-  last_message_at: z.date().nullable(),
-  last_message_preview: z.string().nullable(),
+  last_message_at: z.date().nullable(),  
 });
 
 export class ChatsDto extends createZodDto(chatsSchema) {}
