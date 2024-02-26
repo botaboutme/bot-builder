@@ -58,8 +58,32 @@ model Resume {
   user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
+  chats      Chat[]
+  Message    Message[]
 
   @@unique([userId, id])
   @@unique([userId, slug])
   @@index(fields: [userId])
+}
+
+model Chat {
+  id              String    @id @default(cuid())
+  resumeId        String
+  resume          Resume    @relation(fields: [resumeId], references: [id])
+  created_at      DateTime
+  last_message_at DateTime
+  messages        Message[]
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  chat_id    String
+  chat       Chat     @relation(fields: [chat_id], references: [id])
+  // Updated fields for sender identification
+  sender_id  String? // If the sender is a resume (bot), nullable for anonymous user
+  text       String
+  created_at DateTime
+
+  // Define an explicit relation to Resume without expecting a back relation
+  senderResume Resume? @relation(fields: [sender_id], references: [id], onDelete: SetNull)
 }
