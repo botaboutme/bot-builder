@@ -5,6 +5,7 @@ import { RedisChatMessageHistory } from "@langchain/redis";
 import { Injectable } from "@nestjs/common";
 import { MessageData } from "@reactive-resume/schema";
 import { BufferMemory } from "langchain/memory";
+import { PrismaService } from "nestjs-prisma";
 import { createClient } from "redis";
 import { Socket } from "socket.io";
 
@@ -15,7 +16,10 @@ function replace_braces(text: string) {
 }
 @Injectable()
 export class ChatService {
-  constructor(private resumeService: ResumeService) {} // Resume Service
+  constructor(
+    private resumeService: ResumeService,
+    private prismaService: PrismaService,
+  ) {} // Resume Service
 
   async streamResponse(client: Socket, messageData: MessageData) {
     const parts = messageData.path.split("/").filter((part) => part);
@@ -33,6 +37,7 @@ export class ChatService {
       "\n You will only answer based on the data that is given, to best of your knowledge. If there is some data not available you will say you dont know very politely." +
       " \n You Always respond in mark down format";
 
+      this.prismaServive
     const systemPrompt = replace_braces(systemPromptRaw);
     const prompt = ChatPromptTemplate.fromMessages([
       ["system", systemPrompt],
