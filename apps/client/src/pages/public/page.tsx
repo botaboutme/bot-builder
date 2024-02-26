@@ -7,6 +7,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, LoaderFunction, redirect, useLoaderData } from "react-router-dom";
 
+import ChatComponent from "@/client/components/chat-component";
 import { Icon } from "@/client/components/icon";
 import { ThemeSwitch } from "@/client/components/theme-switch";
 import { queryClient } from "@/client/libs/query-client";
@@ -68,7 +69,7 @@ export const PublicResumePage = () => {
     <div>
       <Helmet>
         <title>
-          {title} - {t`Reactive Resume`}
+          {title} - {t`Bot About Me`}
         </title>
       </Helmet>
 
@@ -83,16 +84,7 @@ export const PublicResumePage = () => {
           src="/artboard/preview"
           style={{ width: `${pageSizeMap[format].width}mm`, overflow: "hidden" }}
         />
-      </div>
-
-      <div className="flex justify-center py-10 opacity-50 print:hidden">
-        <Link to="/">
-          <Button size="sm" variant="ghost" className="space-x-1.5 text-xs font-normal">
-            <span>{t`Built with`}</span>
-            <Icon size={12} />
-            <span>{t`Reactive Resume`}</span>
-          </Button>
-        </Link>
+        <ChatComponent />
       </div>
 
       <div className="fixed bottom-5 right-5 print:hidden">
@@ -102,7 +94,6 @@ export const PublicResumePage = () => {
             {/* eslint-disable-next-line lingui/no-unlocalized-strings */}
             <span>{t`Download PDF`}</span>
           </Button>
-
           <ThemeSwitch />
         </div>
       </div>

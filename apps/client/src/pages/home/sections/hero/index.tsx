@@ -4,6 +4,7 @@ import { Badge, buttonVariants } from "@reactive-resume/ui";
 import { cn } from "@reactive-resume/utils";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
+import { Steps } from "../steps";
 
 import { defaultTiltProps } from "@/client/constants/parallax-tilt";
 
@@ -22,30 +23,15 @@ export const HeroSection = () => (
         initial={{ opacity: 0, x: -100 }}
         whileInView={{ opacity: 1, x: 0 }}
       >
-        <div className="hidden items-center gap-x-4 sm:flex">
-          <Badge>{t`Version 4`}</Badge>
-
-          <a
-            target="_blank"
-            rel="noreferrer"
-            href="https://docs.rxresu.me/overview/features"
-            className={cn(buttonVariants({ variant: "link" }), "space-x-2 text-left")}
-          >
-            <p>{t`What's new in the latest version`}</p>
-            <ArrowRight />
-          </a>
-        </div>
-
         <div className="mt-10 space-y-2">
-          <h6 className="text-base font-bold tracking-wide">{t`Finally,`}</h6>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-            {t`A free and open-source resume builder`}
-          </h1>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">{t`Build a bot about "YOU"`}</h1>
         </div>
 
         <p className="prose prose-base prose-zinc mt-6 text-lg leading-8 dark:prose-invert">
-          {t`A free and open-source resume builder that simplifies the process of creating, updating, and sharing your resume.`}
+          {t`A space to let others discover things about you.`}
         </p>
+
+        <Steps />
 
         <div className="mt-10 flex items-center gap-x-8">
           <HeroCTA />
@@ -64,7 +50,7 @@ export const HeroSection = () => (
                 width={3600}
                 height={2078}
                 src="/screenshots/builder.jpg"
-                alt="Reactive Resume - Screenshot - Builder Screen"
+                alt="Bot About Me - Screenshot - Builder Screen"
                 className="w-[76rem] rounded-lg bg-background/5 shadow-2xl ring-1 ring-foreground/10"
               />
             </Tilt>

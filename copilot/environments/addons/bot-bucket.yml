@@ -1,0 +1,54 @@
+Resources:
+  botbucketBucket:
+    Metadata:
+      'aws:copilot:description': 'An Amazon S3 bucket, bot-bucket, for storing and retrieving objects'
+    Type: AWS::S3::Bucket
+    Properties:
+      VersioningConfiguration:
+        Status: Enabled
+      AccessControl: Private
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      LifecycleConfiguration:
+        Rules:
+          - Id: ExpireNonCurrentObjects
+            Status: Enabled
+            NoncurrentVersionExpirationInDays: 30
+            AbortIncompleteMultipartUpload:
+              DaysAfterInitiation: 1
+
+  botbucketBucketPolicy:
+    Metadata:
+      'aws:copilot:description': 'A bucket policy to allow public read access and deny unencrypted access to the bucket and its contents'
+    Type: AWS::S3::BucketPolicy
+    DeletionPolicy: Retain
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowPublicRead
+            Effect: Allow
+            Principal: "*"
+            Action: "s3:GetObject"
+            Resource: !Sub "${botbucketBucket.Arn}/*"
+          - Sid: ForceHTTPS
+            Effect: Deny
+            Principal: '*'
+            Action: 's3:*'
+            Resource:
+              - !Sub "${botbucketBucket.Arn}/*"
+              - !Sub "${botbucketBucket.Arn}"
+            Condition:
+              Bool:
+                "aws:SecureTransport": false
+      Bucket: !Ref botbucketBucket

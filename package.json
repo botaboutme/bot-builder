@@ -1,17 +1,13 @@
 {
   "name": "@reactive-resume/source",
   "description": "A free and open-source resume builder that simplifies the process of creating, updating, and sharing your resume.",
-  "version": "4.0.5",
+  "version": "1.0.1",
   "license": "MIT",
   "private": true,
   "author": {
-    "name": "Amruth Pillai",
-    "url": "https://amruthpillai.com",
-    "email": "hello@amruthpillai.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/AmruthPillai/Reactive-Resume.git"
+    "name": "admin",
+    "url": "https://botaboutme.com",
+    "email": "admin@botaboutme.com"
   },
   "scripts": {
     "dev": "nx run-many -t serve",
@@ -119,6 +115,9 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@fontsource/ibm-plex-sans": "^5.0.18",
     "@hookform/resolvers": "^3.3.4",
+    "@langchain/core": "^0.1.30",
+    "@langchain/openai": "^0.0.14",
+    "@langchain/redis": "^0.0.1",
     "@lingui/cli": "^4.7.0",
     "@lingui/core": "^4.7.0",
     "@lingui/detect-locale": "^4.7.0",
@@ -132,9 +131,11 @@
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.3.0",
+    "@nestjs/platform-socket.io": "^10.3.3",
     "@nestjs/serve-static": "^4.0.0",
     "@nestjs/swagger": "^7.2.0",
     "@nestjs/terminus": "^10.2.0",
+    "@nestjs/websockets": "^10.3.3",
     "@paralleldrive/cuid2": "^2.2.2",
     "@pdf-lib/fontkit": "^1.1.1",
     "@phosphor-icons/react": "^2.0.15",
@@ -192,9 +193,11 @@
     "immer": "^10.0.3",
     "ioredis": "^5.3.2",
     "jszip": "^3.10.1",
+    "langchain": "^0.1.20",
     "lodash.debounce": "^4.0.8",
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2",
+    "marked": "^12.0.0",
     "minio": "^7.1.3",
     "nest-raven": "^10.0.1",
     "nestjs-minio-client": "^2.2.0",
@@ -211,9 +214,11 @@
     "passport-local": "^1.0.0",
     "pdf-lib": "^1.17.1",
     "prisma": "^5.8.1",
+    "prompts": "link:@langchain/core/prompts",
     "puppeteer": "^21.7.0",
     "qrcode.react": "^3.1.0",
     "react": "18.2.0",
+    "react-chat-elements": "^12.0.13",
     "react-colorful": "^5.6.1",
     "react-dom": "18.2.0",
     "react-helmet-async": "^2.0.4",
@@ -222,9 +227,13 @@
     "react-resizable-panels": "^1.0.9",
     "react-router-dom": "6.21.3",
     "react-zoom-pan-pinch": "^3.3.0",
+    "redis": "^4.6.13",
     "reflect-metadata": "^0.2.1",
+    "runnables": "link:@langchain/core/runnables",
     "rxjs": "^7.8.1",
     "sharp": "^0.33.2",
+    "socket.io": "^4.7.4",
+    "socket.io-client": "^4.7.4",
     "tailwind-merge": "^2.2.0",
     "tslib": "^2.6.2",
     "unique-names-generator": "^4.7.1",
@@ -242,6 +251,6 @@
     "node": ">=18.0.0"
   },
   "prisma": {
-    "schema": "tools/prisma/schema.prisma"
+    "schema": "./tools/prisma/schema.prisma"
   }
 }

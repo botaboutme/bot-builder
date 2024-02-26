@@ -20,6 +20,11 @@ export const defaultResumeData: ResumeData = {
   sections: defaultSections,
   metadata: defaultMetadata,
 };
+//For Web Socket dataTansfer
+export interface MessageData {
+  message: string;
+  path: string;
+}
 
 export * from "./basics";
 export * from "./metadata";
