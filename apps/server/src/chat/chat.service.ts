@@ -1,4 +1,7 @@
-import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
+import {
+  ChatPromptTemplate,
+  MessagesPlaceholder,
+} from "@langchain/core/prompts";
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 import { ChatOpenAI } from "@langchain/openai";
 import { RedisChatMessageHistory } from "@langchain/redis";
@@ -7,26 +10,45 @@ import { MessageData } from "@reactive-resume/schema";
 import { BufferMemory } from "langchain/memory";
 import { createClient } from "redis";
 import { Socket } from "socket.io";
-
+import { PrismaService } from "nestjs-prisma";
 import { ResumeService } from "../resume/resume.service";
 
 function replace_braces(text: string) {
   return text.replace(/{/g, "{{").replace(/}/g, "}}");
 }
 
-
 @Injectable()
 export class ChatService {
-  constructor(private resumeService: ResumeService) {} // Resume Service
-
-
+  constructor(
+    private resumeService: ResumeService, // Resume Service
+    private readonly prisma: PrismaService
+  ) {}
 
   async streamResponse(client: Socket, messageData: MessageData) {
     const parts = messageData.path.split("/").filter((part) => part);
     const username = parts[0];
     const slug = parts[1];
-    const resume = await this.resumeService.findOneByUsernameSlug(username, slug);
-    // console.log(JSON.stringify(resume, null, 3));
+    const resume = await this.resumeService.findOneByUsernameSlug(
+      username,
+      slug
+    );
+
+    //create chat session in db
+    const chatSession = await this.prisma.chat.upsert({
+      where: {
+        sessionId: client.id.toString(),
+      },
+      update: {
+        lastMessageAt: new Date().toISOString(),
+      },
+      create: {
+        resumeId: resume.id,
+        sessionId: client.id,
+        createdAt: new Date().toISOString(),
+        lastMessageAt: new Date().toISOString(),
+      },
+    })
+
     const model = new ChatOpenAI({
       openAIApiKey: process.env.OPENAI_API_KEY, // Ensure you've set your API key in the environment variables
       //modelName: "gpt-4-0125-preview",
@@ -57,10 +79,6 @@ export class ChatService {
 
     console.log(await memory.loadMemoryVariables({}));
 
-    /*
-      { history: [] }
-    */
-
     const chainWithHistory = new RunnableWithMessageHistory({
       runnable: chain,
       getMessageHistory: (sessionId) =>
@@ -73,10 +91,6 @@ export class ChatService {
       historyMessagesKey: "history",
     });
 
-    // const inputs = {
-    //   input: message,
-    // };
-
     try {
       const stream = await chainWithHistory.stream(
         {
@@ -86,12 +100,39 @@ export class ChatService {
           configurable: {
             sessionId: client.id,
           },
-        },
+        }
       );
 
+      //write user question to database
+      const chatMessageQuestion = await this.prisma.message.create({
+        data: {
+          chatId: chatSession.id,
+          text: messageData.message,
+          createdAt: new Date().toISOString(),
+        },
+      });
+
+      //write response to database
+      let msg = "";
       for await (const chunk of stream) {
         console.log(`${chunk.content}|`); // Optional: for debugging purposes
         client.emit("newChunk", chunk.content); // Stream the chunk content to the client
+
+        msg += chunk.content;
+        if (chunk.content === "" && msg != "") {
+          
+          const chatMessageResponse = await this.prisma.message.create({
+            data: {
+              chatId: chatSession.id,
+              text: msg,
+              createdAt: new Date().toISOString(),
+              senderId:resume.id
+            },
+          });
+
+          //reset the message
+          msg = "";
+        }
       }
     } catch (error) {
       console.error("Error streaming response from OpenAI:", error);
@@ -99,7 +140,6 @@ export class ChatService {
     }
   }
 
-    
   // Mock data for demonstration
   private mockSessions = [
     {
@@ -144,7 +184,7 @@ export class ChatService {
   // Method to retrieve sessions for a user
   async getSessionsForUser(userId: string) {
     try {
-    return this.mockSessions.filter(session => session.userId === userId);
+      return this.mockSessions.filter((session) => session.userId === userId);
     } catch (error) {
       return [];
     }
@@ -153,9 +193,9 @@ export class ChatService {
   // Method to retrieve messages for a session
   async getMessagesForSession(chatId: string) {
     try {
-      return this.mockMessages.filter(message => message.chat_id === chatId);
-      } catch (error) {
-        return [];
-    }    
+      return this.mockMessages.filter((message) => message.chat_id === chatId);
+    } catch (error) {
+      return [];
+    }
   }
 }
