@@ -197,10 +197,10 @@ export const ListView = () => {
 
       {chatSessionsData && (
         <AnimatePresence>
-          {chatSessionsData.map((resume, index) => (
+          {chatSessionsData.map((chat, index) => (
             <motion.div
               layout
-              key={resume._id}
+              key={chat.id}
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0, transition: { delay: (index + 2) * 0.1 } }}
               exit={{ opacity: 0, filter: "blur(8px)", transition: { duration: 0.5 } }}
