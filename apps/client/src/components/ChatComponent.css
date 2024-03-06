@@ -1,0 +1,25 @@
+
+
+.MainContainer {
+  padding: 20px;
+}
+
+.MessageList {
+  padding: 10px 0;
+}
+
+.MessageInput {
+  padding: 10px 0;
+}
+
+.CSMessage {
+  padding: 8px;
+}
+
+.cs-main-container {
+  padding: 1rem;
+}
+
+.cs-chat-container .cs-message-input {
+  padding: 1em 0 .3em 0em;
+}
