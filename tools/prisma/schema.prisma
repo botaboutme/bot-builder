@@ -60,6 +60,8 @@ model Resume {
   updatedAt  DateTime   @updatedAt
   chats      Chat[]
   Message    Message[]
+  chats      Chat[]
+  Message    Message[]
 
   @@unique([userId, id])
   @@unique([userId, slug])

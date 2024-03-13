@@ -6,3 +6,27 @@
 * {
   @apply border-border/50;
 }
+
+.chat-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+/* Tail for messages from the current user */
+.anonymous-user::after {
+  right: -8px; /* Adjust based on your layout */
+  border-width: 8px 0 8px 8px; /* Adjust the size of the tail */
+  border-color: transparent transparent transparent red; /* Tail color, match with bg-blue-500 */
+  background-color: yellow !important;
+}
+
+/* Tail for messages from other users */
+.other-user::after {
+  left: -8px; /* Adjust based on your layout */
+  border-width: 8px 8px 8px 0; /* Adjust the size of the tail */
+  border-color: transparent #d1d5db transparent transparent; /* Tail color, match with bg-gray-300 */
+}

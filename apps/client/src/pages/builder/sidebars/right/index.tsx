@@ -6,7 +6,6 @@ import { Copyright } from "@/client/components/copyright";
 import { ThemeSwitch } from "@/client/components/theme-switch";
 
 import { ExportSection } from "./sections/export";
-import { InformationSection } from "./sections/information";
 import { LayoutSection } from "./sections/layout";
 import { NotesSection } from "./sections/notes";
 import { PageSection } from "./sections/page";
@@ -29,6 +28,7 @@ export const RightSidebar = () => {
     <div className="flex bg-secondary-accent/30">
       <ScrollArea orientation="vertical" className="h-screen flex-1 pb-16 lg:pb-0">
         <div ref={containterRef} className="grid gap-y-6 p-6 @container/right">
+          <SharingSection />
           <TemplateSection />
           <Separator />
           <LayoutSection />
@@ -39,15 +39,12 @@ export const RightSidebar = () => {
           <Separator />
           <PageSection />
           <Separator />
-          <SharingSection />
           <Separator />
           <StatisticsSection />
           <Separator />
           <ExportSection />
           <Separator />
           <NotesSection />
-          <Separator />
-          <InformationSection />
           <Separator />
           <Copyright className="text-center" />
         </div>
@@ -57,6 +54,7 @@ export const RightSidebar = () => {
         <div />
 
         <div className="flex flex-col items-center justify-center gap-y-2">
+          <SectionIcon id="sharing" name={t`Sharing`} onClick={() => scrollIntoView("#sharing")} />
           <SectionIcon
             id="template"
             name={t`Template`}
@@ -70,7 +68,6 @@ export const RightSidebar = () => {
           />
           <SectionIcon id="theme" name={t`Theme`} onClick={() => scrollIntoView("#theme")} />
           <SectionIcon id="page" name={t`Page`} onClick={() => scrollIntoView("#page")} />
-          <SectionIcon id="sharing" name={t`Sharing`} onClick={() => scrollIntoView("#sharing")} />
           <SectionIcon
             id="statistics"
             name={t`Statistics`}

@@ -105,7 +105,7 @@ export const FeaturesSection = () => {
         <div className="space-y-6 leading-loose">
           <h2 className="text-4xl font-bold">{t`Rich in features, not in pricing.`}</h2>
           <p className="max-w-4xl text-base leading-relaxed">
-            {t`Reactive Resume is a passion project of over 3 years of hard work, and with that comes a number of re-iterated ideas and features that have been built to (near) perfection.`}
+            {t`Bot About Me is a project derived from open source Reactive Resume build by Amruth Pillai. It has been adapted to make space for creating a bot about yourself by uploading your resume/profile.`}
           </p>
 
           <IconContext.Provider value={{ size: 14, weight: "bold" }}>

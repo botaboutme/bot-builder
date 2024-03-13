@@ -17,7 +17,7 @@ export const ResumesPage = () => {
     <>
       <Helmet>
         <title>
-          {t`Resumes`} - {t`Reactive Resume`}
+          {t`Resumes`} - {t`Bot About Me`}
         </title>
       </Helmet>
 

@@ -1,16 +1,10 @@
+import React from 'react';
 import { t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
 import { Helmet } from "react-helmet-async";
+import CookieConsent from "react-cookie-consent"; // Import CookieConsent
 
-import { ContributorsSection } from "./sections/contributors";
-import { FAQSection } from "./sections/faq";
-import { FeaturesSection } from "./sections/features";
 import { HeroSection } from "./sections/hero";
-import { LogoCloudSection } from "./sections/logo-cloud";
-import { StatisticsSection } from "./sections/statistics";
-import { SupportSection } from "./sections/support";
-import { TemplatesSection } from "./sections/templates";
-import { TestimonialsSection } from "./sections/testimonials";
 
 export const HomePage = () => {
   const { i18n } = useLingui();
@@ -21,24 +15,31 @@ export const HomePage = () => {
         <html lang={i18n.locale} />
 
         <title>
-          {t`Reactive Resume`} - {t`A free and open-source resume builder`}
+          {t`Bot About Me`} - {t`A space to share a bot about you based on your profile/resume`}
         </title>
 
         <meta
           name="description"
-          content="A free and open-source resume builder that simplifies the process of creating, updating, and sharing your resume."
+          content="A free resume builder that simplifies the process of creating, updating, and creating a bot about your resume."
         />
       </Helmet>
 
       <HeroSection />
-      <LogoCloudSection />
-      <StatisticsSection />
-      <FeaturesSection />
-      <TemplatesSection />
-      <TestimonialsSection />
-      <SupportSection />
-      <FAQSection />
-      <ContributorsSection />
+
+      {/* Your other sections here */}
+
+      {/* Cookie Consent */}
+      <CookieConsent
+        location="bottom"
+        buttonText={t`I agree`}
+        cookieName="userConsentCookie"
+        style={{ background: "#2B373B" }}
+        buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
+        expires={150}
+        // Additional props as needed
+      >
+        {t`We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.`}
+      </CookieConsent>
     </main>
   );
 };

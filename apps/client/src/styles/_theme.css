@@ -1,5 +1,15 @@
 /* Theme */
 @layer base {
+   h1 {
+    @apply bg-gradient-to-r from-[color:hsl(var(--purple-500))] to-[color:hsl(var(--sky-500))] bg-clip-text text-transparent;
+  } 
+  h2 {
+    @apply bg-gradient-to-r from-[color:hsl(var(--purple-500))] to-[color:hsl(var(--sky-500))] bg-clip-text text-transparent;
+  }
+  /*  
+   button{
+    @apply bg-gradient-to-r from-[color:var(--purple-500)] to-[color:var(--sky-500)] text-white !important;
+  }   */
   :root {
     --background: var(--zinc-50);
     --foreground: var(--zinc-950);
@@ -72,3 +82,10 @@
     --success-foreground: var(--emerald-50);
   }
 }
+
+@layer components {
+  .bg-primary {
+    @apply bg-gradient-to-r from-[color:hsl(var(--purple-500))] to-[color:hsl(var(--sky-500))] text-white !important;
+  }
+} 
+

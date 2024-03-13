@@ -209,7 +209,7 @@ export const ImportDialog = () => {
                 </div>
               </DialogTitle>
               <DialogDescription>
-                {t`Upload a file from one of the accepted sources to parse existing data and import it into Reactive Resume for easier editing.`}
+                {t`Upload a file from one of the accepted sources to parse existing data and import it into Bot About Me for easier editing.`}
               </DialogDescription>
             </DialogHeader>
 

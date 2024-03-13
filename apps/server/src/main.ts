@@ -65,9 +65,9 @@ async function bootstrap() {
   // Swagger (OpenAPI Docs)
   // This can be accessed by visiting {SERVER_URL}/api/docs
   const config = new DocumentBuilder()
-    .setTitle("Reactive Resume")
+    .setTitle("Bot About Me")
     .setDescription(
-      "Reactive Resume is a free and open source resume builder that's built to make the mundane tasks of creating, updating and sharing your resume as easy as 1, 2, 3.",
+      "Bot About Me is a project aimed to make the mundane tasks of creating, updating and sharing your resume with the added facility to let people discover more about you.",
     )
     .addCookieAuth("Authentication", { type: "http", in: "cookie", scheme: "Bearer" })
     .setVersion("4.0.0")

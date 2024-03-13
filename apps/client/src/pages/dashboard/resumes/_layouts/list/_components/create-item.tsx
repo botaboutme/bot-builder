@@ -21,7 +21,7 @@ export const CreateResumeListItem = () => {
           <KeyboardShortcut className="ml-2">^N</KeyboardShortcut>
         </>
       }
-      description={t`Start building from scratch`}
+      description=""
     />
   );
 };
