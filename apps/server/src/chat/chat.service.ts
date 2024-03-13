@@ -1,16 +1,15 @@
-import {
-  ChatPromptTemplate,
-  MessagesPlaceholder,
-} from "@langchain/core/prompts";
+import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 import { ChatOpenAI } from "@langchain/openai";
 import { RedisChatMessageHistory } from "@langchain/redis";
 import { Injectable } from "@nestjs/common";
+import { ChatDto } from "@reactive-resume/dto";
 import { MessageData } from "@reactive-resume/schema";
 import { BufferMemory } from "langchain/memory";
+import { PrismaService } from "nestjs-prisma";
 import { createClient } from "redis";
 import { Socket } from "socket.io";
-import { PrismaService } from "nestjs-prisma";
+
 import { ResumeService } from "../resume/resume.service";
 
 function replace_braces(text: string) {
@@ -21,17 +20,14 @@ function replace_braces(text: string) {
 export class ChatService {
   constructor(
     private resumeService: ResumeService, // Resume Service
-    private readonly prisma: PrismaService
+    private readonly prisma: PrismaService,
   ) {}
 
   async streamResponse(client: Socket, messageData: MessageData) {
     const parts = messageData.path.split("/").filter((part) => part);
     const username = parts[0];
     const slug = parts[1];
-    const resume = await this.resumeService.findOneByUsernameSlug(
-      username,
-      slug
-    );
+    const resume = await this.resumeService.findOneByUsernameSlug(username, slug);
 
     //create chat session in db
     const chatSession = await this.prisma.chat.upsert({
@@ -47,7 +43,7 @@ export class ChatService {
         createdAt: new Date().toISOString(),
         lastMessageAt: new Date().toISOString(),
       },
-    })
+    });
 
     const model = new ChatOpenAI({
       openAIApiKey: process.env.OPENAI_API_KEY, // Ensure you've set your API key in the environment variables
@@ -100,11 +96,11 @@ export class ChatService {
           configurable: {
             sessionId: client.id,
           },
-        }
+        },
       );
 
       //write user question to database
-      const chatMessageQuestion = await this.prisma.message.create({
+      await this.prisma.message.create({
         data: {
           chatId: chatSession.id,
           text: messageData.message,
@@ -120,13 +116,12 @@ export class ChatService {
 
         msg += chunk.content;
         if (chunk.content === "" && msg != "") {
-          
-          const chatMessageResponse = await this.prisma.message.create({
+          await this.prisma.message.create({
             data: {
               chatId: chatSession.id,
               text: msg,
               createdAt: new Date().toISOString(),
-              senderId:resume.id
+              senderId: resume.id,
             },
           });
 
@@ -196,6 +191,43 @@ export class ChatService {
       return this.mockMessages.filter((message) => message.chat_id === chatId);
     } catch (error) {
       return [];
+    }
+  }
+
+  async getAllChatsForUser(userId: string): Promise<ChatDto[]> {
+    try {
+      const chats = await this.prisma.chat.findMany({
+        where: {
+          resume: {
+            userId: userId,
+          },
+        },
+        include: {
+          messages: true,
+        },
+      });
+
+      // Transform and validate each chat against the ChatDto schema
+      // This step assumes ChatDto is compatible with Zod's parse method
+      const chatDtos = chats.map((chat: ChatDto) =>
+        ChatDto.schema.parse({
+          ...chat,
+          messages: chat.messages
+            ? chat.messages.map((message) => ({
+                id: message.id,
+                chatId: message.chatId,
+                senderId: message.senderId,
+                text: message.text,
+                createdAt: message.createdAt,
+              }))
+            : undefined,
+        }),
+      );
+
+      return chatDtos;
+    } catch (error) {
+      console.error("Error fetching chats for user:", error);
+      throw error;
     }
   }
 }
