@@ -51,7 +51,7 @@ export const ConvversationView = () => {
               key={chat.id}
               name={`Chat ${chat.id}`} // Assuming no specific name for chats, using ID
               lastSenderName="User" // Placeholder, adjust based on your data
-              info={chat.messages[chat.messages.length - 1]?.text}
+              info={chat.messages[chat.messages.length - 1].text}
               onClick={() => setSelectedChat(chat)}
               active={selectedChat?.id === chat.id}
             >

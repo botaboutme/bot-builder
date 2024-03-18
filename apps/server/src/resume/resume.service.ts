@@ -1,6 +1,6 @@
 import { PromptTemplate } from "@langchain/core/prompts";
 import { RunnableSequence } from "@langchain/core/runnables";
-import { OpenAI } from "@langchain/openai";
+import { ChatOpenAI, OpenAI } from "@langchain/openai";
 import {
   BadRequestException,
   Injectable,
@@ -17,7 +17,7 @@ import { ErrorMessage } from "@reactive-resume/utils";
 import { RedisService } from "@songkeys/nestjs-redis";
 import deepmerge from "deepmerge";
 import Redis from "ioredis";
-import { StructuredOutputParser } from "langchain/output_parsers";
+import { OutputFixingParser, StructuredOutputParser } from "langchain/output_parsers";
 import * as mammoth from "mammoth";
 import { PrismaService } from "nestjs-prisma";
 import pdfParse from "pdf-parse";
@@ -219,7 +219,7 @@ export class ResumeService {
       PromptTemplate.fromTemplate(
         "Extract as much data as possible from the given data.\n{format_instructions}\n{question}. \n Make sure that all the id feilds are unique strings.\n Make sure that you return a valid JSON. \n Remove Invalid ",
       ),
-      new OpenAI({ modelName: "gpt-4-turbo-preview", temperature: 0 }),
+      new OpenAI({ modelName: "gpt-4", temperature: 0 }),
       parser,
     ]);
 
@@ -242,7 +242,10 @@ export class ResumeService {
       return response;
     } catch (error) {
       Logger.error(`Error processing uploaded resume for user ${userId}: ${error.message}`);
-      throw new InternalServerErrorException("Failed to process uploaded resume");
+      const fixParser = OutputFixingParser.fromLLM(new ChatOpenAI({ temperature: 0 }), parser);
+      const output = await fixParser.parse(error.message);
+      console.log("Fixed output: ", output);
+      return output;
     }
   }
 

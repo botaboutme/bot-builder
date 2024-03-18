@@ -7,7 +7,6 @@ import { ChatDto } from "@reactive-resume/dto";
 import { MessageData } from "@reactive-resume/schema";
 import { BufferMemory } from "langchain/memory";
 import { PrismaService } from "nestjs-prisma";
-import { PrismaService } from "nestjs-prisma";
 import { createClient } from "redis";
 import { Socket } from "socket.io";
 
@@ -56,7 +55,6 @@ export class ChatService {
       "\n You will only answer based on the data that is given, to best of your knowledge. If there is some data not available you will say you dont know very politely." +
       " \n You Always respond in mark down format";
 
-      this.prismaServive
     const systemPrompt = replace_braces(systemPromptRaw);
     const prompt = ChatPromptTemplate.fromMessages([
       ["system", systemPrompt],
