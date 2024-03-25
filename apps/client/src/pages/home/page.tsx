@@ -1,8 +1,8 @@
-import React from 'react';
 import { t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
-import { Helmet } from "react-helmet-async";
+import React from "react";
 import CookieConsent from "react-cookie-consent"; // Import CookieConsent
+import { Helmet } from "react-helmet-async";
 
 import { HeroSection } from "./sections/hero";
 

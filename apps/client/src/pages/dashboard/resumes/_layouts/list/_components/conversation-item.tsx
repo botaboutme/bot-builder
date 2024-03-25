@@ -1,6 +1,4 @@
 /* eslint-disable lingui/no-unlocalized-strings */
-import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
-
 import {
   Avatar,
   ChatContainer,
@@ -21,8 +19,7 @@ import React, { useEffect, useState } from "react";
 
 import { useChatSessions } from "@/client/services/chat/chats";
 
-// Placeholder avatar import - replace or dynamically assign as needed
-import defaultAvatar from "../../../../../../../public/logo/light.svg"; // Ensure you have a default avatar image
+import defaultAvatar from "../../../../../../../public/logo/light.svg";
 
 export const ConvversationView = () => {
   const { chatSessions } = useChatSessions();
@@ -34,8 +31,6 @@ export const ConvversationView = () => {
     }
   }, [chatSessions]);
 
-  //const selectedChat = chatSessions?.find((chat) => chat.id === selectedChatId);
-  console.log("Selected Chat : ", selectedChat);
   return (
     <MainContainer
       responsive
@@ -49,9 +44,13 @@ export const ConvversationView = () => {
           {chatSessions?.map((chat) => (
             <Conversation
               key={chat.id}
-              name={`Chat ${chat.id}`} // Assuming no specific name for chats, using ID
-              lastSenderName="User" // Placeholder, adjust based on your data
-              info={chat.messages[chat.messages.length - 1]?.text}
+              name={`Chat ${chat.id}`}
+              lastSenderName="User"
+              info={
+                chat.messages && chat.messages.length > 0
+                  ? chat.messages[chat.messages.length - 1].text
+                  : ""
+              }
               onClick={() => setSelectedChat(chat)}
               active={selectedChat?.id === chat.id}
             >
@@ -78,9 +77,11 @@ export const ConvversationView = () => {
               <Message
                 key={message.id}
                 model={{
-                  message: message.text ? message.text : "",
-                  sentTime: new Date(message.createdAt).toLocaleTimeString(),
-                  sender: message.senderId ? "User" : "Bot", // Placeholder, adjust based on your data
+                  message: message.text || "",
+                  sentTime: message.createdAt
+                    ? new Date(message.createdAt).toLocaleTimeString()
+                    : "",
+                  sender: message.senderId ? "User" : "Bot",
                   direction: message.senderId ? "outgoing" : "incoming",
                   position: "single",
                 }}

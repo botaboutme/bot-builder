@@ -1,8 +1,9 @@
 # --- Base Image ---
-FROM node:lts-bullseye-slim AS base
+FROM node:latest AS base
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+ENV PUPPETEER_SKIP_DOWNLOAD=true
 # ARG NX_CLOUD_ACCESS_TOKEN
 
 RUN corepack enable
