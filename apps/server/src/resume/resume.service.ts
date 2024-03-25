@@ -1,3 +1,6 @@
+import { PromptTemplate } from "@langchain/core/prompts";
+import { RunnableSequence } from "@langchain/core/runnables";
+import { ChatOpenAI, OpenAI } from "@langchain/openai";
 import {
   BadRequestException,
   Injectable,
@@ -7,19 +10,22 @@ import {
 import { Prisma } from "@prisma/client";
 import { CreateResumeDto, ImportResumeDto, ResumeDto, UpdateResumeDto } from "@reactive-resume/dto";
 import { defaultResumeData, ResumeData } from "@reactive-resume/schema";
+import { resumeDataSchema } from "@reactive-resume/schema";
 import type { DeepPartial } from "@reactive-resume/utils";
 import { generateRandomName, kebabCase } from "@reactive-resume/utils";
 import { ErrorMessage } from "@reactive-resume/utils";
 import { RedisService } from "@songkeys/nestjs-redis";
 import deepmerge from "deepmerge";
 import Redis from "ioredis";
+import { OutputFixingParser, StructuredOutputParser } from "langchain/output_parsers";
+import * as mammoth from "mammoth";
 import { PrismaService } from "nestjs-prisma";
+import pdfParse from "pdf-parse";
 
 import { PrinterService } from "@/server/printer/printer.service";
 
 import { StorageService } from "../storage/storage.service";
 import { UtilsService } from "../utils/utils.service";
-
 @Injectable()
 export class ResumeService {
   private readonly redis: Redis;
@@ -204,5 +210,73 @@ export class ResumeService {
 
   printPreview(resume: ResumeDto) {
     return this.printerService.printPreview(resume);
+  }
+
+  async processUploadedResume(file: Express.Multer.File, userId: string) {
+    const parser = StructuredOutputParser.fromZodSchema(resumeDataSchema);
+
+    const chain = RunnableSequence.from([
+      PromptTemplate.fromTemplate(
+        "Extract as much data as possible from the given data.\n{format_instructions}\n{question}. \n Make sure that all the id feilds are unique strings.\n Make sure that you return a valid JSON. \n Remove Invalid ",
+      ),
+      new OpenAI({ modelName: "gpt-4", temperature: 0 }),
+      parser,
+    ]);
+
+    console.log(parser.getFormatInstructions());
+
+    try {
+      // Placeholder for file processing and data extraction logic
+      // You might use a third-party library or service here to extract resume data
+      const extractedData = await this.extractDataFromFile(file);
+
+      // Here you would typically store the extracted data in your database
+      // This is a simplified example that just logs the extracted data
+      const response = await chain.invoke({
+        question: extractedData,
+        format_instructions: parser.getFormatInstructions(),
+      });
+
+      console.log(`Extracted data for user ${userId}: ${response}`);
+
+      return response;
+    } catch (error) {
+      Logger.error(`Error processing uploaded resume for user ${userId}: ${error.message}`);
+      const fixParser = OutputFixingParser.fromLLM(new ChatOpenAI({ temperature: 0 }), parser);
+      const output = await fixParser.parse(error.message);
+      console.log("Fixed output: ", output);
+      return output;
+    }
+  }
+
+  private async extractDataFromFile(file: Express.Multer.File): Promise<string> {
+    switch (file.mimetype) {
+      case "application/pdf":
+        return await this.extractTextFromPDF(file.buffer);
+      case "application/vnd.openxmlformats-officedocument.wordprocessingml.document": // MIME type for DOCX
+        return await this.extractTextFromDocX(file.buffer);
+      default:
+        throw new Error("Unsupported file type");
+    }
+  }
+  async extractTextFromPDF(fileBuffer: Buffer): Promise<string> {
+    try {
+      const data = await pdfParse(fileBuffer);
+      return data.text;
+    } catch (error) {
+      console.error("Error extracting text from PDF:", error);
+      throw error;
+    }
+  }
+
+  // Function to extract text from a DOCX file buffer
+  async extractTextFromDocX(fileBuffer: Buffer): Promise<string> {
+    try {
+      const result = await mammoth.extractRawText({ buffer: fileBuffer });
+      return result.value; // The raw text
+    } catch (error) {
+      console.error("Error extracting text from DOCX:", error);
+      throw error;
+    }
   }
 }

@@ -10,6 +10,7 @@ import { CreateResumeListItem } from "./_components/create-item";
 import { ImportResumeListItem } from "./_components/import-item";
 import { ResumeListItem } from "./_components/resume-item";
 import { StatisticsCard } from "./_components/statistics-card";
+import { UploadResumeListItem } from "./_components/upload-item";
 
 export const ListView = () => {
   const { resumes, loading } = useResumes();
