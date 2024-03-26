@@ -1,3 +1,4 @@
+/* eslint-disable lingui/no-unlocalized-strings */
 import { ResumeDto } from "@reactive-resume/dto";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
@@ -31,10 +32,13 @@ export const useUploadResume = () => {
   } = useMutation({
     mutationFn: uploadResume,
     onSuccess: (data) => {
+      console.log("Resume Data : ", data);
       // Assuming you want to cache the uploaded resume data or update existing queries
       queryClient.setQueryData<ResumeDto>(["resume", { id: data.id }], data);
-      // Update or invalidate relevant queries as needed
-      //queryClient.invalidateQueries(["resumes"]);
+      queryClient.setQueryData<ResumeDto[]>(["resumes"], (cache) => {
+        if (!cache) return [data];
+        return [...cache, data];
+      });
     },
   });
 

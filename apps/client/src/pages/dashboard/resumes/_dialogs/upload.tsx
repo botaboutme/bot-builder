@@ -1,3 +1,4 @@
+/* eslint-disable lingui/no-unlocalized-strings */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { t } from "@lingui/macro";
 import { UploadSimple } from "@phosphor-icons/react";
@@ -22,7 +23,7 @@ import { useForm } from "react-hook-form";
 import { z, ZodError } from "zod";
 
 import { useToast } from "@/client/hooks/use-toast";
-import { uploadResume } from "@/client/services/resume/upload";
+import { useUploadResume } from "@/client/services/resume/upload";
 import { useDialog } from "@/client/stores/dialog";
 
 const formSchema = z.object({
@@ -37,6 +38,8 @@ export const UploadDialog = () => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
   });
+
+  const { uploadResume, loading, error: uploadError } = useUploadResume();
 
   useEffect(() => {
     if (isOpen) form.reset();
@@ -66,6 +69,7 @@ export const UploadDialog = () => {
         toast({
           variant: "error",
           title: t`An unexpected error occurred.` + error,
+          description: uploadError?.message,
         });
       }
     }
@@ -83,40 +87,50 @@ export const UploadDialog = () => {
                   <h2>{t`Upload a new resume`}</h2>
                 </div>
               </DialogTitle>
-              <DialogDescription>
-                {t`Select and upload your resume in PDF, DOC, or DOCX format.`}
-              </DialogDescription>
+              {!loading && (
+                <>
+                  <DialogDescription>
+                    {t`Select and upload your resume in PDF, DOC, or DOCX format.`}
+                  </DialogDescription>
+                  <FormField
+                    name="file"
+                    control={form.control}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t`Resume File`}</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="file"
+                            accept=".pdf,.doc,.docx"
+                            onChange={(event) => {
+                              if (!event.target.files || event.target.files.length === 0) {
+                                field.onChange(undefined);
+                              } else {
+                                field.onChange(event.target.files[0]);
+                              }
+                            }}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </>
+              )}
+              {loading && (
+                <DialogDescription>
+                  {t`An AI agent is parsing your resume. This is a beta functionality and it works 95% of the time. This can take upto 2 mins`}
+                </DialogDescription>
+              )}
             </DialogHeader>
 
-            <FormField
-              name="file"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t`Resume File`}</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="file"
-                      accept=".pdf,.doc,.docx"
-                      onChange={(event) => {
-                        if (!event.target.files || event.target.files.length === 0) {
-                          field.onChange(undefined);
-                        } else {
-                          field.onChange(event.target.files[0]);
-                        }
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <DialogFooter>
-              <Button type="button" onClick={onUpload}>
-                {t`Upload`}
-              </Button>
-            </DialogFooter>
+            {!loading && (
+              <DialogFooter>
+                <Button type="button" onClick={onUpload} disabled={loading}>
+                  {t`Upload`}
+                </Button>
+              </DialogFooter>
+            )}
           </form>
         </Form>
       </DialogContent>

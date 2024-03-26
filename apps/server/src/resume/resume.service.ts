@@ -220,7 +220,7 @@ export class ResumeService {
         "Extract as much data as possible from the given data.\n{format_instructions}\n{question}. \n Make sure that all the id feilds are unique strings.\n Make sure that you return a valid JSON. \n Remove Invalid ",
       ),
       new OpenAI({ modelName: "gpt-4", temperature: 0 }),
-      parser,
+      //parser,
     ]);
 
     console.log(parser.getFormatInstructions());
@@ -237,15 +237,27 @@ export class ResumeService {
         format_instructions: parser.getFormatInstructions(),
       });
 
-      console.log(`Extracted data for user ${userId}: ${response}`);
-
-      return response;
+      console.log(`Extracted data for user ${userId}`);
+      let strucOutput = {};
+      try {
+        console.log(response);
+        const validJson = this.cleanupAndValidateJSON(response);
+        if (validJson.isValid && validJson.cleanedJSON) {
+          strucOutput = validJson.cleanedJSON;
+        }
+        this.removeKeyFromJSON(strucOutput, "metadata");
+      } catch (error) {
+        console.log(error);
+      }
+      const data = deepmerge(defaultResumeData, strucOutput);
+      console.log(" The Data is : " + JSON.stringify(data));
+      return data;
     } catch (error) {
       Logger.error(`Error processing uploaded resume for user ${userId}: ${error.message}`);
       const fixParser = OutputFixingParser.fromLLM(new ChatOpenAI({ temperature: 0 }), parser);
       const output = await fixParser.parse(error.message);
       console.log("Fixed output: ", output);
-      return output;
+      return defaultResumeData;
     }
   }
 
@@ -277,6 +289,48 @@ export class ResumeService {
     } catch (error) {
       console.error("Error extracting text from DOCX:", error);
       throw error;
+    }
+  }
+
+  removeKeyFromJSON(jsonObj: Record<string, never>, keyToRemove: string) {
+    // Check if the key exists in the JSON object
+    if (Object.prototype.hasOwnProperty.call(jsonObj, keyToRemove)) {
+      // If the key exists, remove it
+      delete jsonObj[keyToRemove];
+    }
+    // Return the modified JSON object
+    return jsonObj;
+  }
+
+  cleanupAndValidateJSON(input: string): { isValid: boolean; cleanedJSON?: Record<string, never> } {
+    // Find the position of "```json" and "```"
+    const startTagIndex = input.indexOf("```json");
+    const endTagIndex = input.indexOf("```", startTagIndex + 1);
+
+    // Check if both tags exist
+    if (startTagIndex !== -1 && endTagIndex !== -1) {
+      // Extract the JSON string between "```json" and "```"
+      const jsonString = input.substring(startTagIndex + 7, endTagIndex).trim();
+
+      try {
+        // Parse the extracted JSON string
+        const cleanedJSON = JSON.parse(jsonString);
+        // Return the cleaned JSON object and indicate that it's valid
+        return { isValid: true, cleanedJSON };
+      } catch (error) {
+        // If parsing fails, indicate that the JSON is invalid
+        return { isValid: false };
+      }
+    } else {
+      // If "```json" tags do not exist, consider the whole string and attempt to parse it as JSON
+      try {
+        const cleanedJSON = JSON.parse(input);
+        // Return the cleaned JSON object and indicate that it's valid
+        return { isValid: true, cleanedJSON };
+      } catch (error) {
+        // If parsing fails, indicate that the JSON is invalid
+        return { isValid: false };
+      }
     }
   }
 }

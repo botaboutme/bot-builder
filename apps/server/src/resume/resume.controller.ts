@@ -178,7 +178,8 @@ export class ResumeController {
       const parser = new ReactiveResumeParser();
       const isValid = parser.validate(result);
       const parsedData = parser.convert(result as ResumeData);
-      console.log(isValid);
+      console.log("Is valid" + JSON.stringify(isValid, null, 2));
+      console.log("parsedData" + JSON.stringify(parsedData, null, 2));
 
       return await this.resumeService.import(user.id, { data: parsedData });
     } catch (error) {
