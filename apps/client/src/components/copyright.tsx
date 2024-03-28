@@ -1,4 +1,4 @@
-import { t, Trans } from "@lingui/macro";
+import { t } from "@lingui/macro";
 import { cn } from "@reactive-resume/utils";
 
 type Props = {

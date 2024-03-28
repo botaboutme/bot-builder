@@ -14,6 +14,7 @@ import { VolunteerDialog } from "../pages/builder/sidebars/left/dialogs/voluntee
 import { ImportDialog } from "../pages/dashboard/resumes/_dialogs/import";
 import { LockDialog } from "../pages/dashboard/resumes/_dialogs/lock";
 import { ResumeDialog } from "../pages/dashboard/resumes/_dialogs/resume";
+import { UploadDialog } from "../pages/dashboard/resumes/_dialogs/upload";
 import { TwoFactorDialog } from "../pages/dashboard/settings/_dialogs/two-factor";
 import { useResumeStore } from "../stores/resume";
 
@@ -33,6 +34,7 @@ export const DialogProvider = ({ children }: Props) => {
         <LockDialog />
         <ImportDialog />
         <TwoFactorDialog />
+        <UploadDialog />
 
         {isResumeLoaded && (
           <>

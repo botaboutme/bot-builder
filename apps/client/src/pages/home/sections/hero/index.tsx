@@ -1,13 +1,10 @@
 import { t } from "@lingui/macro";
-import { ArrowRight } from "@phosphor-icons/react";
-import { Badge, buttonVariants } from "@reactive-resume/ui";
-import { cn } from "@reactive-resume/utils";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
-import { Steps } from "../steps";
 
 import { defaultTiltProps } from "@/client/constants/parallax-tilt";
 
+import { Steps } from "../steps";
 import { HeroCTA } from "./call-to-action";
 import { Decoration } from "./decoration";
 
@@ -24,10 +21,10 @@ export const HeroSection = () => (
         whileInView={{ opacity: 1, x: 0 }}
       >
         <div className="mt-10 space-y-2">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">{t`Build a bot about "YOU"`}</h1>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">{t`Build a bot about YOU`}</h1>
         </div>
 
-        <p className="prose prose-base prose-zinc mt-6 text-lg leading-8 dark:prose-invert">
+        <p className="dark:prose-invert prose prose-base prose-zinc mt-6 text-lg leading-8">
           {t`A space to let others discover things about you.`}
         </p>
 
@@ -49,7 +46,7 @@ export const HeroSection = () => (
               <img
                 width={3600}
                 height={2078}
-                src="/screenshots/builder.jpg"
+                src="/screenshots/builder.png"
                 alt="Bot About Me - Screenshot - Builder Screen"
                 className="w-[76rem] rounded-lg bg-background/5 shadow-2xl ring-1 ring-foreground/10"
               />

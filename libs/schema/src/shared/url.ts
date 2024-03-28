@@ -3,7 +3,7 @@ import { z } from "zod";
 // Schema
 export const urlSchema = z.object({
   label: z.string(),
-  href: z.literal("").or(z.string().url()),
+  href: z.literal("").or(z.string()),
 });
 
 // Type

@@ -30,21 +30,9 @@ msgstr "有 {templatesCount} 个简历模板可供选择"
 msgid "{value, plural, one {Column} other {Columns}}"
 msgstr "{value, plural, one {栏} other {栏}}"
 
-#: apps/client/src/pages/builder/sidebars/right/sections/information.tsx:20
-msgid "<0>I built Reactive Resume mostly by myself during my spare time, with a lot of help from other great open-source contributors.</0><1>If you like the app and want to support keeping it free forever, please donate whatever you can afford to give.</1>"
-msgstr "<0>我花费了大量业余时间，独立开发了 Reactive Resume，并非常感谢其他优秀开源贡献者的帮助。</0><1>您的任何捐赠都会帮助 Reactive Resume 保持免费并持续发展，让更多的人从中受益。</1>"
-
-#: apps/client/src/pages/builder/sidebars/right/sections/information.tsx:51
-msgid "<0>I'm sure the app is not perfect, but I'd like for it to be.</0><1>If you faced any issues while creating your resume, or have an idea that would help you and other users in creating your resume more easily, drop an issue on the repository or send me an email about it.</1>"
-msgstr "<0>我知道这个应用程序并不完美，但我希望它能日趋完善。</0> <1>如果您在创建简历时遇到任何问题，或者有有助于您和其他用户更轻松地创建简历的想法，请在仓库中提出问题或向我发送有关的电子邮件。</1>"
-
 #: apps/client/src/pages/dashboard/settings/_sections/openai.tsx:126
-msgid "<0>Note: </0>By utilizing the OpenAI API, you acknowledge and accept the <1>terms of use</1> and <2>privacy policy</2> outlined by OpenAI. Please note that Reactive Resume bears no responsibility for any improper or unauthorized utilization of the service, and any resulting repercussions or liabilities solely rest on the user."
-msgstr "<0>注意：</0>使用 OpenAI API 即表示您承认并接受 OpenAI 的<1>使用条款</1>和<2>隐私政策</2>。请注意，Reactive Resume 对任何不当或未经授权的服务使用不承担任何责任，由此产生的任何影响或责任仅由用户承担。"
-
-#: apps/client/src/pages/builder/sidebars/right/sections/information.tsx:90
-msgid "<0>The community has spent a lot of time writing the documentation for Reactive Resume, and I'm sure it will help you get started with the app.</0><1>There are also a lot of examples to help you get started, and features that you might not know about which could help you build your perfect resume.</1>"
-msgstr "<0>社区花费了大量时间编写 Reactive Resume 的文档，我相信这将有助于您上手该应用程序。</0><1>还有很多示例可以帮助您入门，也有很多您可能不知道但有助于构建完美简历的功能。</1>"
+msgid "<0>Note: </0>By utilizing the OpenAI API, you acknowledge and accept the <1>terms of use</1> and <2>privacy policy</2> outlined by OpenAI. Please note that Bot About Me bears no responsibility for any improper or unauthorized utilization of the service, and any resulting repercussions or liabilities solely rest on the user."
+msgstr ""
 
 #: apps/client/src/pages/dashboard/settings/_sections/security.tsx:146
 msgid "<0>Two-factor authentication is currently disabled.</0> You can enable it by adding an authenticator app to your account."
@@ -54,13 +42,7 @@ msgstr "<0>目前双因素身份验证已禁用。</0>您可以将身份验证�
 msgid "<0>Two-factor authentication is enabled.</0> You will be asked to enter a code every time you sign in."
 msgstr "<0>已启用双重身份验证。</0>您在每次登录时都需要输入验证码。"
 
-#: apps/client/src/pages/home/page.tsx:24
-#: apps/client/src/pages/home/sections/hero/index.tsx:42
-msgid "A free and open-source resume builder"
-msgstr "免费开源的简历生成器"
-
 #: apps/client/src/pages/home/components/footer.tsx:20
-#: apps/client/src/pages/home/sections/hero/index.tsx:47
 msgid "A free and open-source resume builder that simplifies the process of creating, updating, and sharing your resume."
 msgstr "一款免费开源的简历生成器，可简化创建、更新和共享简历的过程。"
 
@@ -69,10 +51,6 @@ msgstr "一款免费开源的简历生成器，可简化创建、更新和共享
 msgid "A link has been copied to your clipboard."
 msgstr "已将链接复制至剪贴板"
 
-#: apps/client/src/components/copyright.tsx:29
-msgid "A passion project by <0>Amruth Pillai</0>"
-msgstr "<0>Amruth Pillai</0> 的热心项目"
-
 #: apps/client/src/pages/auth/forgot-password/page.tsx:57
 msgid "A password reset link should have been sent to your inbox, if an account existed with the email you provided."
 msgstr "如果您提供的电子邮件绑定了账号，您的收件箱中应该会收到一条密码重置链接。"
@@ -80,6 +58,14 @@ msgstr "如果您提供的电子邮件绑定了账号，您的收件箱中应该
 #: apps/client/src/services/errors/translate-error.ts:31
 msgid "A resume with this slug already exists, please pick a different unique identifier."
 msgstr "带有此 标语 的简历已存在，请选择其他唯一标识符"
+
+#: apps/client/src/pages/home/sections/hero/index.tsx:28
+msgid "A space to let others discover things about you."
+msgstr ""
+
+#: apps/client/src/pages/home/page.tsx:18
+msgid "A space to share a bot about you based on your profile/resume"
+msgstr ""
 
 #: apps/client/src/services/errors/translate-error.ts:9
 msgid "A user with this email address and/or username already exists."
@@ -97,6 +83,10 @@ msgstr "仅接受 {accept} 文件"
 #: apps/client/src/pages/dashboard/settings/_sections/account.tsx:104
 msgid "Account"
 msgstr "账户"
+
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/conversation-item.tsx:68
+msgid "Active now"
+msgstr ""
 
 #: apps/client/src/pages/builder/sidebars/left/sections/custom/section.tsx:124
 msgid "Add a custom field"
@@ -129,9 +119,21 @@ msgstr "AI"
 msgid "Already have an account?"
 msgstr "已有账号？"
 
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:122
+msgid "An AI agent is parsing your resume. This is a beta functionality and it works 95% of the time. This can take upto 2 mins"
+msgstr ""
+
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:66
+msgid "An error occurred while uploading the file."
+msgstr ""
+
 #: apps/client/src/pages/dashboard/resumes/_dialogs/import.tsx:144
 msgid "An error occurred while validating the file."
 msgstr "验证文件时发生错误。"
+
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:71
+msgid "An unexpected error occurred."
+msgstr ""
 
 #: apps/client/src/pages/home/sections/features/index.tsx:135
 msgid "and many more..."
@@ -226,14 +228,46 @@ msgstr "边框"
 msgid "Border Radius"
 msgstr "边框半径"
 
-#: apps/client/src/pages/public/page.tsx:91
-msgid "Built with"
-msgstr "构建于"
+#: apps/client/src/components/copyright.tsx:38
+#: apps/client/src/pages/auth/backup-otp/page.tsx:52
+#: apps/client/src/pages/auth/forgot-password/page.tsx:49
+#: apps/client/src/pages/auth/login/page.tsx:55
+#: apps/client/src/pages/auth/register/page.tsx:67
+#: apps/client/src/pages/auth/reset-password/page.tsx:60
+#: apps/client/src/pages/auth/verify-email/page.tsx:43
+#: apps/client/src/pages/auth/verify-otp/page.tsx:52
+#: apps/client/src/pages/builder/page.tsx:39
+#: apps/client/src/pages/dashboard/resumes/page.tsx:20
+#: apps/client/src/pages/dashboard/settings/page.tsx:16
+#: apps/client/src/pages/home/page.tsx:18
+#: apps/client/src/pages/home/sections/support/index.tsx:11
+#: apps/client/src/pages/public/page.tsx:66
+msgid "Bot About Me"
+msgstr ""
 
-#: apps/client/src/components/copyright.tsx:27
-#: apps/client/src/pages/home/sections/contributors/index.tsx:20
-msgid "By the community, for the community."
-msgstr "来自社区，服务社区。"
+#: apps/client/src/pages/home/sections/features/index.tsx:108
+msgid "Bot About Me is a project derived from open source Reactive Resume build by Amruth Pillai. It has been adapted to make space for creating a bot about yourself by uploading your resume/profile."
+msgstr ""
+
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/index.tsx:25
+msgid "Bot Chats"
+msgstr ""
+
+#: apps/client/src/pages/dashboard/_components/sidebar.tsx:104
+msgid "Bot.About.Me"
+msgstr ""
+
+#: apps/client/src/pages/home/sections/logo-cloud/index.tsx:39
+msgid "BotAboutMe has helped people land jobs at these great companies:"
+msgstr ""
+
+#: apps/client/src/pages/home/sections/hero/index.tsx:24
+msgid "Build a bot about YOU"
+msgstr ""
+
+#: apps/client/src/pages/public/page.tsx:113
+msgid "Built with Reactive Resume, Powered By BotABoutMe"
+msgstr ""
 
 #: apps/client/src/pages/builder/sidebars/left/sections/shared/section-dialog.tsx:132
 #: apps/client/src/pages/dashboard/resumes/_dialogs/lock.tsx:49
@@ -263,6 +297,15 @@ msgstr "改变语气"
 #: apps/client/src/pages/dashboard/resumes/_dialogs/resume.tsx:185
 msgid "Changed your mind about the name? Give it a new one."
 msgstr "想改名字了？取个新名字吧。"
+
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/conversation-item.tsx:47
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/conversation-item.tsx:68
+msgid "Chat"
+msgstr ""
+
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/index.tsx:74
+msgid "Chat History"
+msgstr ""
 
 #: apps/client/src/pages/dashboard/settings/_sections/account.tsx:69
 msgid "Check your email for the confirmation link to update your email address."
@@ -389,7 +432,7 @@ msgstr "日期或日期范围"
 #: apps/client/src/pages/dashboard/resumes/_dialogs/resume.tsx:157
 #: apps/client/src/pages/dashboard/resumes/_layouts/grid/_components/resume-card.tsx:148
 #: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:134
-#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:198
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:210
 msgid "Delete"
 msgstr "删除"
 
@@ -425,25 +468,13 @@ msgstr "禁用双重身份验证"
 msgid "Discard"
 msgstr "丢弃"
 
-#: apps/client/src/pages/builder/sidebars/right/sections/information.tsx:110
-msgid "Documentation"
-msgstr "文档"
-
 #: apps/client/src/pages/auth/login/page.tsx:62
 msgid "Don't have an account?"
 msgstr "还没有账户？"
 
-#: apps/client/src/pages/builder/sidebars/right/sections/information.tsx:88
-msgid "Don't know where to begin? Hit the docs!"
-msgstr "不知道从哪里开始？点击文档！"
-
 #: apps/client/src/pages/dashboard/settings/_sections/profile.tsx:101
 msgid "Don't see your language? <0>Help translate the app.</0>"
 msgstr "没有看到您的语言？ <0>帮助翻译应用程序。</0>"
-
-#: apps/client/src/pages/builder/sidebars/right/sections/information.tsx:40
-msgid "Donate to Reactive Resume"
-msgstr "为 Reactive Resume 捐款"
 
 #: apps/client/src/pages/builder/sidebars/right/sections/export.tsx:56
 msgid "Download a JSON snapshot of your resume. This file can be used to import your resume in the future, or can even be shared with others to collaborate."
@@ -454,7 +485,7 @@ msgid "Download a PDF of your resume. This file can be used to print your resume
 msgstr "下载您的 PDF 版本简历。该文件可用于您打印简历、发送给招聘人员或上传到招聘网站。"
 
 #: apps/client/src/pages/builder/_components/toolbar.tsx:144
-#: apps/client/src/pages/public/page.tsx:103
+#: apps/client/src/pages/public/page.tsx:79
 msgid "Download PDF"
 msgstr "下载 PDF"
 
@@ -466,7 +497,7 @@ msgstr "下载"
 #: apps/client/src/pages/dashboard/resumes/_dialogs/resume.tsx:245
 #: apps/client/src/pages/dashboard/resumes/_layouts/grid/_components/resume-card.tsx:132
 #: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:102
-#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:182
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:194
 msgid "Duplicate"
 msgstr "复制"
 
@@ -522,15 +553,15 @@ msgstr "输入您的电子邮件地址，如果该账户存在，我们会向您
 msgid "Errors"
 msgstr "错误"
 
-#: apps/client/src/pages/home/sections/support/index.tsx:78
-msgid "Even if you're not in a position to contribute financially, you can still make a difference by giving the GitHub repository a star, spreading the word to your friends, or dropping a quick message to let me know how Reactive Resume has helped you. Your feedback and support are always welcome and much appreciated!"
-msgstr "如果不方便在经济上进行支持，您也可以给 GitHub 仓库点点收藏、向您的朋友推荐或者快速留言来让我知道 Reactive Resume 对您有哪些帮助。我们随时欢迎并感谢您的反馈和支持！"
+#: apps/client/src/pages/home/sections/support/index.tsx:76
+msgid "Even if you're not in a position to contribute financially, you can still make a difference by giving the GitHub repository a star, spreading the word to your friends, or dropping a quick message to let me know how Bot About Me has helped you. Your feedback and support are always welcome and much appreciated!"
+msgstr ""
 
 #: apps/client/src/pages/home/sections/templates/index.tsx:12
-msgid "Explore the templates available in Reactive Resume and view the resumes crafted with them. They could also serve as examples to help guide the creation of your next resume."
-msgstr "浏览 Reactive Resume 提供的模板，并查看使用这些模板制作的简历。您可以将它们为范例来创建下一份简历。"
+msgid "Explore the templates available in Bot About Me and view the resumes crafted with them. They could also serve as examples to help guide the creation of your next resume."
+msgstr ""
 
-#: apps/client/src/pages/builder/sidebars/right/index.tsx:79
+#: apps/client/src/pages/builder/sidebars/right/index.tsx:76
 #: apps/client/src/pages/builder/sidebars/right/sections/export.tsx:40
 msgid "Export"
 msgstr "导出"
@@ -542,10 +573,6 @@ msgstr "文件"
 #: apps/client/src/pages/dashboard/resumes/_dialogs/import.tsx:221
 msgid "Filetype"
 msgstr "文件类型"
-
-#: apps/client/src/pages/home/sections/hero/index.tsx:40
-msgid "Finally,"
-msgstr "最后，"
 
 #: apps/client/src/components/ai-actions.tsx:90
 msgid "Fix Spelling & Grammar"
@@ -587,10 +614,6 @@ msgstr "您忘记密码了吗？"
 #: apps/client/src/pages/builder/sidebars/right/sections/page.tsx:40
 msgid "Format"
 msgstr "格式"
-
-#: apps/client/src/pages/builder/sidebars/right/sections/information.tsx:49
-msgid "Found a bug, or have an idea for a new feature?"
-msgstr "发现错误，或者有新功能的想法？"
 
 #: apps/client/src/pages/home/sections/features/index.tsx:46
 msgid "Free, forever"
@@ -682,9 +705,13 @@ msgstr "横向"
 msgid "Host your resume publicly"
 msgstr "公开展示您的简历"
 
+#: apps/client/src/pages/home/page.tsx:34
+msgid "I agree"
+msgstr ""
+
 #: apps/client/src/pages/home/sections/testimonials/index.tsx:70
-msgid "I always love to hear from the users of Reactive Resume with feedback or support. Here are some of the messages I've received. If you have any feedback, feel free to drop me an email at <0>{email}</0>."
-msgstr "我们十分欢迎用户对于 Reactive Resume 的反馈和支持。这是我们收到的一些信息，如果您有任何反馈，请随时发送邮件至 <0>{email}</0>。"
+msgid "I always love to hear from the users of Bot About Me with feedback or support. Here are some of the messages I've received. If you have any feedback, feel free to drop me an email at <0>{email}</0>."
+msgstr ""
 
 #: apps/client/src/pages/builder/sidebars/left/dialogs/profiles.tsx:82
 msgid "Icon"
@@ -698,7 +725,7 @@ msgstr "如果此应用对您的求职有所帮助，请通过<0>此联系表</0
 msgid "If you disable two-factor authentication, you will no longer be required to enter a verification code when logging in."
 msgstr "如果您禁用双重身份验证，登录时将不再需要输入验证码。"
 
-#: apps/client/src/pages/home/sections/support/index.tsx:59
+#: apps/client/src/pages/home/sections/support/index.tsx:57
 msgid "If you're multilingual, we'd love your help in bringing the app to more languages and communities. Don't worry if you don't see your language on the list - just give me a shout-out on GitHub, and I'll make sure to include it. Ready to get started? Jump into translation over at Crowdin by clicking the link below."
 msgstr "如果您掌握多种语言，我们希望您能帮助我们将此应用程序推广到更多语言和社区。如果您在列表中没有看到您的语言，请不要担心——只需在 GitHub 上给我留言，我保证会将其包含在内。准备好开始了吗？点击下面的链接即可在 Crowdin 跳转到翻译。"
 
@@ -728,8 +755,7 @@ msgstr "在此部分中，您可以更改密码并启用/禁用双重身份验�
 msgid "In this section, you can delete your account and all the data associated to your user, but please keep in mind that <0>this action is irreversible</0>."
 msgstr "在此部分中，您可以删除您的账户以及与您关联的所有数据，但请记住<0>此操作是不可逆的</0>。"
 
-#: apps/client/src/pages/builder/sidebars/right/index.tsx:83
-#: apps/client/src/pages/builder/sidebars/right/sections/information.tsx:122
+#: apps/client/src/pages/builder/sidebars/right/index.tsx:80
 msgid "Information"
 msgstr "信息"
 
@@ -805,11 +831,11 @@ msgid "Language"
 msgstr "语言"
 
 #: apps/client/src/pages/dashboard/resumes/_layouts/grid/_components/resume-card.tsx:116
-#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:149
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:160
 msgid "Last updated {lastUpdated}"
 msgstr "最后更新 {lastUpdated}"
 
-#: apps/client/src/pages/builder/sidebars/right/index.tsx:65
+#: apps/client/src/pages/builder/sidebars/right/index.tsx:63
 #: apps/client/src/pages/builder/sidebars/right/sections/layout.tsx:207
 msgid "Layout"
 msgstr "布局"
@@ -827,10 +853,6 @@ msgstr "信件"
 msgid "Level"
 msgstr "等级"
 
-#: apps/client/src/components/copyright.tsx:16
-msgid "Licensed under <0>MIT</0>"
-msgstr "已获得 <0>MIT 许可</0>"
-
 #: apps/client/src/pages/dashboard/settings/_sections/profile.tsx:81
 msgid "Light"
 msgstr "浅色"
@@ -844,13 +866,16 @@ msgid "Line Height"
 msgstr "行高"
 
 #: apps/client/src/pages/dashboard/resumes/_layouts/grid/_components/import-card.tsx:29
-#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/import-item.tsx:23
 msgid "LinkedIn, JSON Resume, etc."
 msgstr "LinkedIn、JSON 简历等"
 
 #: apps/client/src/pages/dashboard/resumes/page.tsx:45
 msgid "List"
 msgstr "列表"
+
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/index.tsx:45
+msgid "Loading..."
+msgstr ""
 
 #: apps/client/src/pages/builder/sidebars/left/dialogs/custom-section.tsx:99
 #: apps/client/src/pages/builder/sidebars/left/dialogs/experience.tsx:86
@@ -862,7 +887,7 @@ msgstr "位置"
 #: apps/client/src/pages/dashboard/resumes/_dialogs/lock.tsx:51
 #: apps/client/src/pages/dashboard/resumes/_layouts/grid/_components/resume-card.tsx:142
 #: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:122
-#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:192
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:204
 msgid "Lock"
 msgstr "锁定"
 
@@ -943,6 +968,10 @@ msgstr "新密码"
 msgid "No results found"
 msgstr "没找到结果"
 
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/index.tsx:63
+msgid "No resumes found."
+msgstr ""
+
 #: apps/client/src/pages/home/sections/features/index.tsx:49
 msgid "No user tracking or advertising"
 msgstr "没有用户跟踪或广告"
@@ -951,7 +980,7 @@ msgstr "没有用户跟踪或广告"
 msgid "Note: This will make your account less secure."
 msgstr "注意：这会降低您账户的安全性。"
 
-#: apps/client/src/pages/builder/sidebars/right/index.tsx:80
+#: apps/client/src/pages/builder/sidebars/right/index.tsx:77
 #: apps/client/src/pages/builder/sidebars/right/sections/notes.tsx:17
 msgid "Notes"
 msgstr "注释"
@@ -969,7 +998,7 @@ msgstr "糟糕，服务器返回错误。"
 
 #: apps/client/src/pages/dashboard/resumes/_layouts/grid/_components/resume-card.tsx:124
 #: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:84
-#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:174
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:186
 msgid "Open"
 msgstr "打开"
 
@@ -1002,7 +1031,7 @@ msgstr "通过以下方式继续"
 msgid "Organization"
 msgstr "组织"
 
-#: apps/client/src/pages/builder/sidebars/right/index.tsx:72
+#: apps/client/src/pages/builder/sidebars/right/index.tsx:70
 #: apps/client/src/pages/builder/sidebars/right/sections/page.tsx:26
 msgid "Page"
 msgstr "页面"
@@ -1047,6 +1076,10 @@ msgstr "图片"
 msgid "Please note that this step is completely optional."
 msgstr "请注意，此步骤完全是可选的。"
 
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:53
+msgid "Please select a file to upload."
+msgstr ""
+
 #: apps/client/src/pages/dashboard/resumes/_dialogs/import.tsx:225
 msgid "Please select a file type"
 msgstr "请选择文件类型"
@@ -1089,6 +1122,10 @@ msgstr "专业的"
 msgid "Profile"
 msgstr "个人资料"
 
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/index.tsx:22
+msgid "Profile Statistics"
+msgstr ""
+
 #: apps/client/src/pages/builder/sidebars/right/sections/sharing.tsx:55
 msgid "Public"
 msgstr "公开"
@@ -1097,43 +1134,9 @@ msgstr "公开"
 msgid "Publisher"
 msgstr "发布者"
 
-#: apps/client/src/pages/builder/sidebars/right/sections/information.tsx:69
-msgid "Raise an issue"
-msgstr "提出问题"
-
-#: apps/client/src/components/copyright.tsx:38
-#: apps/client/src/pages/auth/backup-otp/page.tsx:52
-#: apps/client/src/pages/auth/forgot-password/page.tsx:49
-#: apps/client/src/pages/auth/login/page.tsx:55
-#: apps/client/src/pages/auth/register/page.tsx:67
-#: apps/client/src/pages/auth/reset-password/page.tsx:60
-#: apps/client/src/pages/auth/verify-email/page.tsx:43
-#: apps/client/src/pages/auth/verify-otp/page.tsx:52
-#: apps/client/src/pages/builder/page.tsx:39
-#: apps/client/src/pages/dashboard/resumes/page.tsx:20
-#: apps/client/src/pages/dashboard/settings/page.tsx:16
 #: apps/client/src/pages/home/components/footer.tsx:17
-#: apps/client/src/pages/home/page.tsx:24
-#: apps/client/src/pages/public/page.tsx:71
-#: apps/client/src/pages/public/page.tsx:93
-msgid "Reactive Resume"
-msgstr "及时简历"
-
-#: apps/client/src/pages/home/sections/logo-cloud/index.tsx:39
-msgid "Reactive Resume has helped people land jobs at these great companies:"
-msgstr "Reactive Resume 已经帮助人们在这些优秀公司中找到了工作："
-
-#: apps/client/src/pages/home/sections/support/index.tsx:12
-msgid "Reactive Resume is a free and open-source project crafted mostly by me, and your support would be greatly appreciated. If you're inclined to contribute, and only if you can afford to, consider making a donation through any of the listed platforms. Additionally, donations to Reactive Resume through Open Collective are tax-exempt, as the project is fiscally hosted by Open Collective Europe."
-msgstr "Reactive Resume 是一个免费的开源项目，主要由我制作，非常感谢您的支持。如果您愿意捐款（有能力的情况下），请考虑通过列出的任意平台进行捐款。此外，通过 Open Collective 对 Reactive Resume 的捐款是免税的，因为该项目由 Open Collective Europe 负责财务托管。"
-
-#: apps/client/src/pages/home/sections/features/index.tsx:108
-msgid "Reactive Resume is a passion project of over 3 years of hard work, and with that comes a number of re-iterated ideas and features that have been built to (near) perfection."
-msgstr "Reactive Resume 是一个历经 3 年多艰苦努力的热情项目，随之而来的是许多经过反复推敲的想法和功能，这些想法和功能已经（接近）构建完美。"
-
-#: apps/client/src/pages/home/sections/contributors/index.tsx:22
-msgid "Reactive Resume thrives thanks to its vibrant community. This project owes its progress to numerous individuals who've dedicated their time and skills. Below, we celebrate the coders who've enhanced its features on GitHub and the linguists whose translations on Crowdin have made it accessible to a broader audience."
-msgstr "Reactive Resume 的蓬勃发展得益于其充满活力的社区。这个项目的进步要归功于无数奉献了时间和技能的个人。下面，我们要向在 GitHub 上增强其功能的程序员和在 Crowdin 上进行翻译的语言学家表示敬意，他们的翻译让更多人了解了 Reactive Resume。"
+msgid "RBot About Me"
+msgstr ""
 
 #: apps/client/src/pages/builder/_components/toolbar.tsx:72
 msgid "Redo"
@@ -1151,7 +1154,7 @@ msgstr "删除页面"
 #: apps/client/src/pages/builder/sidebars/left/sections/shared/section-options.tsx:83
 #: apps/client/src/pages/dashboard/resumes/_layouts/grid/_components/resume-card.tsx:128
 #: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:93
-#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:178
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:190
 msgid "Rename"
 msgstr "重命名"
 
@@ -1176,7 +1179,20 @@ msgstr "重置密码"
 msgid "Reset Zoom"
 msgstr "重置缩放"
 
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:100
+msgid "Resume File"
+msgstr ""
+
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:59
+msgid "Resume uploaded successfully."
+msgstr ""
+
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/index.tsx:24
+msgid "Resume Views"
+msgstr ""
+
 #: apps/client/src/pages/dashboard/_components/sidebar.tsx:86
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/index.tsx:30
 #: apps/client/src/pages/dashboard/resumes/page.tsx:20
 #: apps/client/src/pages/dashboard/resumes/page.tsx:35
 msgid "Resumes"
@@ -1226,6 +1242,10 @@ msgstr "搜索字体变体"
 msgid "Search for a language"
 msgstr "搜索语言"
 
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/conversation-item.tsx:42
+msgid "Search..."
+msgstr ""
+
 #: apps/client/src/pages/home/sections/features/index.tsx:56
 msgid "Secure with two-factor authentication"
 msgstr "使用双重身份验证保护"
@@ -1234,6 +1254,10 @@ msgstr "使用双重身份验证保护"
 msgid "Security"
 msgstr "安全"
 
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:93
+msgid "Select and upload your resume in PDF, DOC, or DOCX format."
+msgstr ""
+
 #: apps/client/src/pages/home/sections/features/index.tsx:50
 msgid "Self-host with Docker"
 msgstr "使用 Docker 自托管"
@@ -1241,10 +1265,6 @@ msgstr "使用 Docker 自托管"
 #: apps/client/src/pages/auth/forgot-password/page.tsx:98
 msgid "Send Email"
 msgstr "发送电子邮件"
-
-#: apps/client/src/pages/builder/sidebars/right/sections/information.tsx:79
-msgid "Send me a message"
-msgstr "给我发消息"
 
 #: apps/client/src/components/user-options.tsx:28
 #: apps/client/src/pages/dashboard/_components/sidebar.tsx:92
@@ -1257,7 +1277,7 @@ msgstr "设置"
 msgid "Setup two-factor authentication on your account"
 msgstr "为您的账户设置双重身份验证"
 
-#: apps/client/src/pages/builder/sidebars/right/index.tsx:73
+#: apps/client/src/pages/builder/sidebars/right/index.tsx:57
 #: apps/client/src/pages/builder/sidebars/right/sections/sharing.tsx:39
 msgid "Sharing"
 msgstr "分享中"
@@ -1339,7 +1359,6 @@ msgid "Square"
 msgstr "方形"
 
 #: apps/client/src/pages/dashboard/resumes/_layouts/grid/_components/create-card.tsx:29
-#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/create-item.tsx:24
 msgid "Start building from scratch"
 msgstr "从头开始构建"
 
@@ -1347,7 +1366,7 @@ msgstr "从头开始构建"
 msgid "Start building your resume by giving it a name."
 msgstr "从给简历命名开始构建你的简历。"
 
-#: apps/client/src/pages/builder/sidebars/right/index.tsx:76
+#: apps/client/src/pages/builder/sidebars/right/index.tsx:73
 #: apps/client/src/pages/builder/sidebars/right/sections/statistics.tsx:23
 msgid "Statistics"
 msgstr "统计数据"
@@ -1380,23 +1399,23 @@ msgstr "已存储"
 msgid "Summary"
 msgstr "总结"
 
-#: apps/client/src/pages/builder/sidebars/right/sections/information.tsx:18
-msgid "Support the app by donating what you can!"
-msgstr "量力捐赠来支持本应用程序！"
-
 #: apps/client/src/pages/home/sections/support/index.tsx:9
-msgid "Supporting Reactive Resume"
-msgstr "支持 Reactive Resume"
+msgid "Supporting Bot About Me"
+msgstr ""
 
 #: apps/client/src/pages/home/sections/features/index.tsx:65
 msgid "Supports A4/Letter page formats"
 msgstr "支持 A4/信纸页面格式"
 
+#: apps/client/src/pages/dashboard/resumes/_layouts/grid/_components/upload-card.tsx:30
+msgid "Supports PDF, DOC, and DOCX formats."
+msgstr ""
+
 #: apps/client/src/pages/dashboard/settings/_sections/profile.tsx:80
 msgid "System"
 msgstr "系统"
 
-#: apps/client/src/pages/builder/sidebars/right/index.tsx:62
+#: apps/client/src/pages/builder/sidebars/right/index.tsx:60
 #: apps/client/src/pages/builder/sidebars/right/sections/template.tsx:19
 msgid "Template"
 msgstr "模板"
@@ -1425,7 +1444,7 @@ msgstr "您输入的密码不匹配。"
 msgid "The resume you want to update is locked, please unlock if you wish to make any changes to it."
 msgstr "您要更新的简历已被锁定，如果您想对其进行更改，请解锁。"
 
-#: apps/client/src/pages/builder/sidebars/right/index.tsx:71
+#: apps/client/src/pages/builder/sidebars/right/index.tsx:69
 #: apps/client/src/pages/builder/sidebars/right/sections/theme.tsx:20
 #: apps/client/src/pages/dashboard/settings/_sections/profile.tsx:73
 msgid "Theme"
@@ -1498,12 +1517,16 @@ msgstr "该帐户未启用双重身份验证。"
 msgid "Type <0>delete</0> to confirm deleting your account."
 msgstr "输入 <0>delete</0> 以确认删除您的帐户。"
 
+#: apps/client/src/components/chat-component.tsx:95
+msgid "Type message here..."
+msgstr ""
+
 #. For example, Bachelor's Degree or Master's Degree
 #: apps/client/src/pages/builder/sidebars/left/dialogs/education.tsx:54
 msgid "Type of Study"
 msgstr "研究类型"
 
-#: apps/client/src/pages/builder/sidebars/right/index.tsx:68
+#: apps/client/src/pages/builder/sidebars/right/index.tsx:66
 #: apps/client/src/pages/builder/sidebars/right/sections/typography.tsx:66
 msgid "Typography"
 msgstr "排版"
@@ -1519,7 +1542,7 @@ msgstr "撤销"
 #: apps/client/src/pages/dashboard/resumes/_dialogs/lock.tsx:52
 #: apps/client/src/pages/dashboard/resumes/_layouts/grid/_components/resume-card.tsx:137
 #: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:112
-#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:187
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/resume-item.tsx:199
 msgid "Unlock"
 msgstr "解锁"
 
@@ -1539,9 +1562,23 @@ msgstr "更新现有项目"
 msgid "Update an existing resume"
 msgstr "更新现有简历"
 
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:130
+msgid "Upload"
+msgstr ""
+
 #: apps/client/src/pages/dashboard/resumes/_dialogs/import.tsx:212
-msgid "Upload a file from one of the accepted sources to parse existing data and import it into Reactive Resume for easier editing."
-msgstr "从接受的来源之一上传文件并解析，并将其导入到 Reactive Resume 中以便于编辑。"
+msgid "Upload a file from one of the accepted sources to parse existing data and import it into Bot About Me for easier editing."
+msgstr ""
+
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:87
+#: apps/client/src/pages/dashboard/resumes/_layouts/grid/_components/upload-card.tsx:25
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/upload-item.tsx:18
+msgid "Upload a new resume"
+msgstr ""
+
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/upload-item.tsx:23
+msgid "Upload your resume in PDF, DOC, or DOCX format."
+msgstr ""
 
 #: apps/client/src/pages/builder/sidebars/right/sections/sharing.tsx:73
 msgid "URL"
@@ -1555,6 +1592,13 @@ msgstr "URL 需要以 https:// 开头"
 #: apps/client/src/pages/auth/backup-otp/page.tsx:57
 msgid "Use your backup code"
 msgstr "使用您的备份代码"
+
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/conversation-item.tsx:48
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/conversation-item.tsx:57
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/conversation-item.tsx:67
+#: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/conversation-item.tsx:90
+msgid "User"
+msgstr ""
 
 #: apps/client/src/services/errors/translate-error.ts:11
 msgid "User does not have an associated 'secrets' record. Please report this issue on GitHub."
@@ -1595,10 +1639,6 @@ msgstr "确认双重身份验证是否已正确设置"
 msgid "Verify your email address"
 msgstr "验证电子邮件地址"
 
-#: apps/client/src/pages/home/sections/hero/index.tsx:26
-msgid "Version 4"
-msgstr "第 4 版"
-
 #: apps/client/src/pages/builder/sidebars/right/sections/statistics.tsx:51
 msgid "Views"
 msgstr "视图"
@@ -1606,6 +1646,10 @@ msgstr "视图"
 #: apps/client/src/pages/builder/sidebars/left/sections/shared/section-list-item.tsx:86
 msgid "Visible"
 msgstr "可见"
+
+#: apps/client/src/pages/home/page.tsx:41
+msgid "We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies."
+msgstr ""
 
 #: apps/client/src/pages/auth/verify-email/page.tsx:61
 msgid "We verify your email address only to ensure that we can send you a password reset link in case you forget your password."
@@ -1624,10 +1668,6 @@ msgstr "我们验证您的电子邮件地址只是为了确保在您忘记密码
 #: apps/client/src/pages/builder/sidebars/left/sections/basics.tsx:63
 msgid "Website"
 msgstr "网站"
-
-#: apps/client/src/pages/home/sections/hero/index.tsx:34
-msgid "What's new in the latest version"
-msgstr "最新版本的新功能"
 
 #: apps/client/src/pages/builder/sidebars/left/dialogs/custom-section.tsx:154
 #: apps/client/src/pages/builder/sidebars/left/dialogs/interests.tsx:68
@@ -1649,12 +1689,12 @@ msgid "You can track the number of views your resume has received, or how many p
 msgstr "您可以跟踪简历的浏览量，或通过启用公开共享功能跟踪有多少人下载了简历。"
 
 #: apps/client/src/pages/dashboard/settings/_sections/openai.tsx:60
-msgid "You have the option to <0>obtain your own OpenAI API key</0>. This key empowers you to leverage the API as you see fit. Alternatively, if you wish to disable the AI features in Reactive Resume altogether, you can simply remove the key from your settings."
-msgstr "您可以选择<0>获取您自己的 OpenAI API 密钥</0>，此密钥使您能够根据需要使用 API。或者，如果您希望完全禁用 Reactive Resume 中的 AI 功能，只需从设置中删除密钥即可。"
+msgid "You have the option to <0>obtain your own OpenAI API key</0>. This key empowers you to leverage the API as you see fit. Alternatively, if you wish to disable the AI features in Bot About Me altogether, you can simply remove the key from your settings."
+msgstr ""
 
 #: apps/client/src/pages/auth/verify-email/page.tsx:50
-msgid "You should have received an email from <0>Reactive Resume</0> with a link to verify your account."
-msgstr "您应该已收到来自 <0>Reactive Resume</0> 的电子邮件，其中包含验证账户的链接。"
+msgid "You should have received an email from <0>Bot About Me</0> with a link to verify your account."
+msgstr ""
 
 #: apps/client/src/pages/auth/forgot-password/page.tsx:49
 #: apps/client/src/pages/auth/forgot-password/page.tsx:54
@@ -1688,4 +1728,3 @@ msgstr "放大"
 #: apps/client/src/pages/builder/_components/toolbar.tsx:86
 msgid "Zoom Out"
 msgstr "缩小"
-

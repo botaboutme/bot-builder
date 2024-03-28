@@ -11,12 +11,16 @@ import {
   Post,
   UseGuards,
 } from "@nestjs/common";
+import { UploadedFile, UseInterceptors } from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiTags } from "@nestjs/swagger";
 import { User as UserEntity } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { CreateResumeDto, ImportResumeDto, ResumeDto, UpdateResumeDto } from "@reactive-resume/dto";
-import { resumeDataSchema } from "@reactive-resume/schema";
+import { ReactiveResumeParser } from "@reactive-resume/parser";
+import { ResumeData, resumeDataSchema } from "@reactive-resume/schema";
 import { ErrorMessage } from "@reactive-resume/utils";
+// import { Express } from "express";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
 import { User } from "@/server/user/decorators/user.decorator";
@@ -148,6 +152,39 @@ export class ResumeController {
     } catch (error) {
       Logger.error(error);
       throw new InternalServerErrorException(error);
+    }
+  }
+  @Post("upload")
+  @UseGuards(TwoFactorGuard) // Assuming you want the upload to be protected by 2FA as well
+  @UseInterceptors(
+    FileInterceptor("file", {
+      fileFilter: (_req, file, callback) => {
+        const allowedTypes = [
+          "application/pdf",
+          "application/msword",
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        ];
+        if (!allowedTypes.includes(file.mimetype)) {
+          return callback(new BadRequestException("Invalid file type"), false);
+        }
+        callback(null, true);
+      },
+    }),
+  )
+  async uploadResume(@UploadedFile() file: Express.Multer.File, @User() user: UserEntity) {
+    // Assuming you have a method in your ResumeService to handle the file processing
+    try {
+      const result = await this.resumeService.processUploadedResume(file, user.id);
+      const parser = new ReactiveResumeParser();
+      const isValid = parser.validate(result);
+      const parsedData = parser.convert(result as ResumeData);
+      console.log("Is valid" + JSON.stringify(isValid, null, 2));
+      console.log("parsedData" + JSON.stringify(parsedData, null, 2));
+
+      return await this.resumeService.import(user.id, { data: parsedData });
+    } catch (error) {
+      Logger.error(error);
+      throw new InternalServerErrorException("Failed to process resume");
     }
   }
 }

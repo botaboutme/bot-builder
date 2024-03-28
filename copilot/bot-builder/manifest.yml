@@ -11,7 +11,7 @@ http:
   # Requests to this path will be forwarded to your service.
   # To match all requests you can use the "/" path.
   path: '/'
-  alias: test.botaboutme.com
+  alias: preprod.botaboutme.com
   # You can specify a custom health check path. The default is "/".
   # healthcheck: '/'
 
@@ -22,8 +22,8 @@ image:
   # Port exposed through your container to route traffic to it.
   port: 3000
 
-cpu: 256       # Number of CPU units for the task.
-memory: 512    # Amount of memory in MiB used by the task.
+cpu: 512       # Number of CPU units for the task.
+memory: 1024    # Amount of memory in MiB used by the task.
 platform: linux/x86_64  # See https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/#platform
 count: 1       # Number of tasks that should be running in your service.
 exec: true     # Enable running commands in your container.
@@ -34,29 +34,29 @@ network:
       - from_cfn: ${COPILOT_APPLICATION_NAME}-${COPILOT_ENVIRONMENT_NAME}-botbuilderclusterSecurityGroup
 
 secrets:
-  DATABASE_URL: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/DB_STRING
-  REDIS_URL: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/REDIS_URL
-  STORAGE_ACCESS_KEY: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/STORAGE_ACCESS_KEY
-  STORAGE_SECRET_KEY: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/STORAGE_SECRET_KEY
-
+  DATABASE_URL: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/db_string
+  REDIS_URL: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/redis_url
+  STORAGE_ACCESS_KEY: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/access_key
+  STORAGE_SECRET_KEY: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/secret_key
+  OPENAI_API_KEY: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/openai_key
 
 variables:
   STORAGE_ENDPOINT: 's3.amazonaws.com'
   STORAGE_REGION: 'eu-central-1'
   STORAGE_BUCKET:
-    from_cfn: ${COPILOT_APPLICATION_NAME}-${COPILOT_ENVIRONMENT_NAME}-botbucketBucketName
+    from_cfn: ${COPILOT_APPLICATION_NAME}-${COPILOT_ENVIRONMENT_NAME}-preprodBucketName
   STORAGE_USE_SSL: true
   STORAGE_PORT: 443
-  STORAGE_URL: https://drsdfbr25lwjr.cloudfront.net
+  STORAGE_URL: https://dgrtvso2qkv3y.cloudfront.net
   ACCESS_TOKEN_SECRET: access_token_secret
   REFRESH_TOKEN_SECRET: refresh_token_secret
-  PUBLIC_URL: https://test.botaboutme.com
+  PUBLIC_URL: https://preprod.botaboutme.com
 
 # Chrome Browser (for printing)
 # generated with `openssl rand -hex 32`
   CHROME_PORT: 3000
   CHROME_TOKEN: chrome_token
-  CHROME_URL: ws://browserless.test.bot-builder.local:3000
+  CHROME_URL: ws://browserless.pre-prod.bot-about-me.local:3000
 
 
 

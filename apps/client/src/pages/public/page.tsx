@@ -2,36 +2,31 @@ import { t } from "@lingui/macro";
 import { CircleNotch, FilePdf } from "@phosphor-icons/react";
 import { ResumeDto } from "@reactive-resume/dto";
 import { Button } from "@reactive-resume/ui";
-import { pageSizeMap } from "@reactive-resume/utils";
-import { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, LoaderFunction, redirect, useLoaderData } from "react-router-dom";
 
 import ChatComponent from "@/client/components/chat-component";
-import { Icon } from "@/client/components/icon";
 import { ThemeSwitch } from "@/client/components/theme-switch";
 import { queryClient } from "@/client/libs/query-client";
 import { findResumeByUsernameSlug, usePrintResume } from "@/client/services/resume";
 
 export const PublicResumePage = () => {
   const frameRef = useRef<HTMLIFrameElement>(null);
-
   const { printResume, loading } = usePrintResume();
-
   const { id, title, data: resume } = useLoaderData() as ResumeDto;
-  const format = resume.metadata.page.format;
 
   const updateResumeInFrame = useCallback(() => {
     if (!frameRef.current || !frameRef.current.contentWindow) return;
     const message = { type: "SET_RESUME", payload: resume };
-    (() => frameRef.current.contentWindow.postMessage(message, "*"))();
+    frameRef.current.contentWindow.postMessage(message, "*");
   }, [frameRef, resume]);
 
   useEffect(() => {
     if (!frameRef.current) return;
     frameRef.current.addEventListener("load", updateResumeInFrame);
     return () => frameRef.current?.removeEventListener("load", updateResumeInFrame);
-  }, [frameRef]);
+  }, [frameRef, updateResumeInFrame]);
 
   useEffect(() => {
     if (!frameRef.current || !frameRef.current.contentWindow) return;
@@ -56,46 +51,67 @@ export const PublicResumePage = () => {
 
   const onDownloadPdf = async () => {
     const { url } = await printResume({ id });
-
     const openInNewTab = (url: string) => {
       const win = window.open(url, "_blank");
       if (win) win.focus();
     };
-
     openInNewTab(url);
   };
 
   return (
-    <div>
+    <div className="flex h-screen flex-col">
       <Helmet>
         <title>
-          {title} - {t`Bot About Me`}
+          {resume.basics.name} - {t`Bot About Me`}
         </title>
       </Helmet>
 
-      <div
-        style={{ width: `${pageSizeMap[format].width}mm` }}
-        className="mx-auto mb-6 mt-16 overflow-hidden rounded shadow-xl print:m-0 print:shadow-none"
-      >
-        <iframe
-          title={title}
-          ref={frameRef}
-          scrolling="no"
-          src="/artboard/preview"
-          style={{ width: `${pageSizeMap[format].width}mm`, overflow: "hidden" }}
-        />
-        <ChatComponent />
-      </div>
-
-      <div className="fixed bottom-5 right-5 print:hidden">
+      {/* Header */}
+      <div className="flex items-center justify-between bg-gray-100 p-4 shadow">
+        <div>
+          <h1 className="text-xl font-bold">{resume.basics.name}</h1>
+          <p className="text-sm">{resume.basics.headline}</p>
+        </div>
         <div className="flex items-center gap-x-4">
-          <Button variant="outline" className="gap-x-2 rounded-full" onClick={onDownloadPdf}>
+          <Button variant="outline" onClick={onDownloadPdf}>
             {loading ? <CircleNotch size={16} className="animate-spin" /> : <FilePdf size={16} />}
-            {/* eslint-disable-next-line lingui/no-unlocalized-strings */}
             <span>{t`Download PDF`}</span>
           </Button>
           <ThemeSwitch />
         </div>
+      </div>
+
+      {/* Main Area - Adjusted for spacing and overflow */}
+      <div className="grow overflow-auto">
+        <div
+          className="flex flex-col gap-4 p-4 md:flex-row "
+          style={{ height: "calc(90vh - 4rem)" }}
+        >
+          <div className="h-full grow md:w-1/2">
+            <div className="h-full overflow-hidden rounded shadow-xl">
+              <iframe
+                title={title}
+                ref={frameRef}
+                src="/artboard/preview"
+                className="size-full"
+                scrolling="yes" // Ensure the iframe allows scrolling
+              ></iframe>
+            </div>
+          </div>
+
+          <div className="h-1/2 grow overflow-auto rounded shadow-xl md:h-full md:w-1/2">
+            <ChatComponent />
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="bg-gray-100 p-4 text-center shadow-inner">
+        <Link to="/">
+          <Button size="sm" variant="ghost">
+            <span>{t`Built with Reactive Resume, Powered By BotABoutMe`}</span>
+          </Button>
+        </Link>
       </div>
     </div>
   );
