@@ -1,4 +1,3 @@
-/* eslint-disable lingui/no-unlocalized-strings */
 import {
   Avatar,
   ChatContainer,
@@ -14,6 +13,7 @@ import {
   VideoCallButton,
   VoiceCallButton,
 } from "@chatscope/chat-ui-kit-react";
+import { t } from "@lingui/macro";
 import { ChatDto } from "@reactive-resume/dto";
 import React, { useEffect, useState } from "react";
 
@@ -39,13 +39,13 @@ export const ConvversationView = () => {
       }}
     >
       <Sidebar position="left" scrollable={false}>
-        <Search placeholder="Search..." />
+        <Search placeholder={t`Search...`} />
         <ConversationList>
           {chatSessions?.map((chat) => (
             <Conversation
               key={chat.id}
-              name={`Chat ${chat.id}`}
-              lastSenderName="User"
+              name={t`Chat`}
+              lastSenderName={t`User`}
               info={
                 chat.messages && chat.messages.length > 0
                   ? chat.messages[chat.messages.length - 1].text
@@ -54,7 +54,7 @@ export const ConvversationView = () => {
               onClick={() => setSelectedChat(chat)}
               active={selectedChat?.id === chat.id}
             >
-              <Avatar src={defaultAvatar} name="User" status="available" />
+              <Avatar src={defaultAvatar} name={t`User`} status="available" />
             </Conversation>
           ))}
         </ConversationList>
@@ -64,8 +64,8 @@ export const ConvversationView = () => {
         <ChatContainer>
           <ConversationHeader>
             <ConversationHeader.Back />
-            <Avatar src={defaultAvatar} name="User" />
-            <ConversationHeader.Content userName={`Chat ${selectedChat.id}`} info="Active now" />
+            <Avatar src={defaultAvatar} name={t`User`} />
+            <ConversationHeader.Content userName={t`Chat`} info={t`Active now`} />
             <ConversationHeader.Actions>
               <VoiceCallButton />
               <VideoCallButton />
@@ -81,12 +81,13 @@ export const ConvversationView = () => {
                   sentTime: message.createdAt
                     ? new Date(message.createdAt).toLocaleTimeString()
                     : "",
+                  // eslint-disable-next-line lingui/no-unlocalized-strings
                   sender: message.senderId ? "User" : "Bot",
                   direction: message.senderId ? "outgoing" : "incoming",
                   position: "single",
                 }}
               >
-                <Avatar src={defaultAvatar} name="User" />
+                <Avatar src={defaultAvatar} name={t`User`} />
               </Message>
             ))}
           </MessageList>

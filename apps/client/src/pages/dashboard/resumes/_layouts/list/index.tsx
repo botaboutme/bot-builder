@@ -1,4 +1,4 @@
-/* eslint-disable lingui/no-unlocalized-strings */
+import { t } from "@lingui/macro";
 import { sortByDate } from "@reactive-resume/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
@@ -10,7 +10,6 @@ import { CreateResumeListItem } from "./_components/create-item";
 import { ImportResumeListItem } from "./_components/import-item";
 import { ResumeListItem } from "./_components/resume-item";
 import { StatisticsCard } from "./_components/statistics-card";
-import { UploadResumeListItem } from "./_components/upload-item";
 
 export const ListView = () => {
   const { resumes, loading } = useResumes();
@@ -20,15 +19,15 @@ export const ListView = () => {
       {/* First Row: Profile Statistics and Buttons */}
       <div className="mb-4 grid grid-cols-1 gap-4 lg:grid-cols-12">
         <div className="lg:col-span-12">
-          <h2 className="mb-2 text-lg font-semibold">Profile Statistics</h2>
+          <h2 className="mb-2 text-lg font-semibold">{t`Profile Statistics`}</h2>
           <div className="mb-2 grid grid-cols-2 gap-2">
-            <StatisticsCard title="Resume Views" value="100" />
-            <StatisticsCard title="Bot Chats" value="500" />
+            <StatisticsCard title={t`Resume Views`} value="100" />
+            <StatisticsCard title={t`Bot Chats`} value="500" />
           </div>
           <div className="flex items-center justify-between">
             {/* "Resumes" heading with animation */}
             <motion.div initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }}>
-              <h2 className="text-lg font-semibold">Resumes</h2>
+              <h2 className="text-lg font-semibold">{t`Resumes`}</h2>
             </motion.div>
           </div>
           <div className="mb-8 lg:col-span-12">
@@ -43,7 +42,7 @@ export const ListView = () => {
                 <ImportResumeListItem />
               </motion.div>
               {loading ? (
-                <div className="animate-pulse">Loading...</div>
+                <div className="animate-pulse">{t`Loading...`}</div>
               ) : resumes ? (
                 <AnimatePresence>
                   {resumes
@@ -61,7 +60,7 @@ export const ListView = () => {
                     ))}
                 </AnimatePresence>
               ) : (
-                <p>No resumes found.</p>
+                <p>{t`No resumes found.`}</p>
               )}
             </div>
           </div>
@@ -72,7 +71,7 @@ export const ListView = () => {
 
       {/* Third Row: Chat History */}
       <div className="lg:col-span-12">
-        <h2 className="mb-4 text-lg font-semibold">Chat History</h2>
+        <h2 className="mb-4 text-lg font-semibold">{t`Chat History`}</h2>
         <div className="max-h-[300px] overflow-auto">
           <ConvversationView />
         </div>

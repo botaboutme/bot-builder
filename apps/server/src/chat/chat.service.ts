@@ -47,7 +47,7 @@ export class ChatService {
 
     const model = new ChatOpenAI({
       openAIApiKey: process.env.OPENAI_API_KEY, // Ensure you've set your API key in the environment variables
-      //modelName: "gpt-4-0125-preview",
+      modelName: "gpt-4-0125-preview",
     });
     const systemPromptRaw =
       "You are a helpful bot who talks about the given profile.The profile is given in the following json format \n" +

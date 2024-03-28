@@ -1,5 +1,3 @@
-/* eslint-disable lingui/text-restrictions */
-/* eslint-disable lingui/no-unlocalized-strings */
 import { t } from "@lingui/macro";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
@@ -23,11 +21,11 @@ export const HeroSection = () => (
         whileInView={{ opacity: 1, x: 0 }}
       >
         <div className="mt-10 space-y-2">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">Build a bot about "YOU"</h1>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">{t`Build a bot about YOU`}</h1>
         </div>
 
         <p className="prose prose-base prose-zinc mt-6 text-lg leading-8 dark:prose-invert">
-          A space to let others discover things about you.
+          {t`A space to let others discover things about you.`}
         </p>
 
         <Steps />

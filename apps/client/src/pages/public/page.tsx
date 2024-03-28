@@ -1,4 +1,4 @@
-/* eslint-disable lingui/no-unlocalized-strings */
+import { t } from "@lingui/macro";
 import { CircleNotch, FilePdf } from "@phosphor-icons/react";
 import { ResumeDto } from "@reactive-resume/dto";
 import { Button } from "@reactive-resume/ui";
@@ -62,7 +62,9 @@ export const PublicResumePage = () => {
   return (
     <div className="flex h-screen flex-col">
       <Helmet>
-        <title>{resume.basics.name} - Reactive Resume</title>
+        <title>
+          {resume.basics.name} - {t`Bot About Me`}
+        </title>
       </Helmet>
 
       {/* Header */}
@@ -74,7 +76,7 @@ export const PublicResumePage = () => {
         <div className="flex items-center gap-x-4">
           <Button variant="outline" onClick={onDownloadPdf}>
             {loading ? <CircleNotch size={16} className="animate-spin" /> : <FilePdf size={16} />}
-            <span>Download PDF</span>
+            <span>{t`Download PDF`}</span>
           </Button>
           <ThemeSwitch />
         </div>
@@ -108,7 +110,7 @@ export const PublicResumePage = () => {
       <div className="bg-gray-100 p-4 text-center shadow-inner">
         <Link to="/">
           <Button size="sm" variant="ghost">
-            <span>Built with Reactive Resume, Powered By BotABoutMe</span>
+            <span>{t`Built with Reactive Resume, Powered By BotABoutMe`}</span>
           </Button>
         </Link>
       </div>

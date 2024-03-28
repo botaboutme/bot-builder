@@ -1,4 +1,3 @@
-/* eslint-disable lingui/no-unlocalized-strings */
 //import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import "./ChatComponent.css";
@@ -11,6 +10,7 @@ import {
   MessageInput,
   MessageList,
 } from "@chatscope/chat-ui-kit-react";
+import { t } from "@lingui/macro";
 import { marked } from "marked";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -33,7 +33,9 @@ const ChatComponent: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const newSocket = io();
+    let newSocket: Socket;
+    if (process.env.NODE_ENV === "development") newSocket = io("ws://localhost:3000");
+    else newSocket = io();
     setSocket(newSocket);
 
     newSocket.on("newChunk", (chunk: string) => {
@@ -43,13 +45,10 @@ const ChatComponent: React.FC = () => {
         if (lastMsg && lastMsg.sender === "server" && !lastMsg.complete) {
           return [
             ...msgs.slice(0, -1),
-            { ...lastMsg, text: lastMsg.text + chunk, complete: chunk.endsWith("\n") },
+            { ...lastMsg, text: lastMsg.text + chunk, complete: false }, // Need to update this Logic
           ];
         } else {
-          return [
-            ...msgs,
-            { id: Date.now(), text: chunk, sender: "server", complete: chunk.endsWith("\n") },
-          ];
+          return [...msgs, { id: Date.now(), text: chunk, sender: "server", complete: false }]; // Need to Update this Logic.
         }
       });
     });
@@ -86,13 +85,14 @@ const ChatComponent: React.FC = () => {
             >
               <Avatar
                 src={msg.sender === "user" ? botIcon : userIcon}
+                // eslint-disable-next-line lingui/no-unlocalized-strings
                 name={msg.sender === "user" ? "User" : "Bot"}
               />
             </CSMessage>
           ))}
         </MessageList>
         <MessageInput
-          placeholder="Type message here..."
+          placeholder={t`Type message here...`}
           value={message}
           onChange={(val) => setMessage(val)}
           onSend={() => sendMessage()}
