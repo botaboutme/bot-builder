@@ -119,11 +119,11 @@ msgstr "AI"
 msgid "Already have an account?"
 msgstr "Already have an account?"
 
-#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:121
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:122
 msgid "An AI agent is parsing your resume. This is a beta functionality and it works 95% of the time. This can take upto 2 mins"
 msgstr "An AI agent is parsing your resume. This is a beta functionality and it works 95% of the time. This can take upto 2 mins"
 
-#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:65
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:66
 msgid "An error occurred while uploading the file."
 msgstr "An error occurred while uploading the file."
 
@@ -131,7 +131,7 @@ msgstr "An error occurred while uploading the file."
 msgid "An error occurred while validating the file."
 msgstr "An error occurred while validating the file."
 
-#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:70
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:71
 msgid "An unexpected error occurred."
 msgstr "An unexpected error occurred."
 
@@ -252,6 +252,10 @@ msgstr "Bot About Me is a project derived from open source Reactive Resume build
 #: apps/client/src/pages/dashboard/resumes/_layouts/list/index.tsx:25
 msgid "Bot Chats"
 msgstr "Bot Chats"
+
+#: apps/client/src/pages/dashboard/_components/sidebar.tsx:104
+msgid "Bot.About.Me"
+msgstr "Bot.About.Me"
 
 #: apps/client/src/pages/home/sections/logo-cloud/index.tsx:39
 msgid "BotAboutMe has helped people land jobs at these great companies:"
@@ -1072,7 +1076,7 @@ msgstr "Picture"
 msgid "Please note that this step is completely optional."
 msgstr "Please note that this step is completely optional."
 
-#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:52
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:53
 msgid "Please select a file to upload."
 msgstr "Please select a file to upload."
 
@@ -1175,11 +1179,11 @@ msgstr "Reset your password"
 msgid "Reset Zoom"
 msgstr "Reset Zoom"
 
-#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:99
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:100
 msgid "Resume File"
 msgstr "Resume File"
 
-#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:58
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:59
 msgid "Resume uploaded successfully."
 msgstr "Resume uploaded successfully."
 
@@ -1250,7 +1254,7 @@ msgstr "Secure with two-factor authentication"
 msgid "Security"
 msgstr "Security"
 
-#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:92
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:93
 msgid "Select and upload your resume in PDF, DOC, or DOCX format."
 msgstr "Select and upload your resume in PDF, DOC, or DOCX format."
 
@@ -1558,7 +1562,7 @@ msgstr "Update an existing item"
 msgid "Update an existing resume"
 msgstr "Update an existing resume"
 
-#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:129
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:130
 msgid "Upload"
 msgstr "Upload"
 
@@ -1566,7 +1570,7 @@ msgstr "Upload"
 msgid "Upload a file from one of the accepted sources to parse existing data and import it into Bot About Me for easier editing."
 msgstr "Upload a file from one of the accepted sources to parse existing data and import it into Bot About Me for easier editing."
 
-#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:86
+#: apps/client/src/pages/dashboard/resumes/_dialogs/upload.tsx:87
 #: apps/client/src/pages/dashboard/resumes/_layouts/grid/_components/upload-card.tsx:25
 #: apps/client/src/pages/dashboard/resumes/_layouts/list/_components/upload-item.tsx:18
 msgid "Upload a new resume"
