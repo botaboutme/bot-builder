@@ -24,7 +24,7 @@ export const HeroSection = () => (
           <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">{t`Build a bot about YOU`}</h1>
         </div>
 
-        <p className="prose prose-base prose-zinc mt-6 text-lg leading-8 dark:prose-invert">
+        <p className="dark:prose-invert prose prose-base prose-zinc mt-6 text-lg leading-8">
           {t`A space to let others discover things about you.`}
         </p>
 

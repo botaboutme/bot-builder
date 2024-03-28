@@ -3,6 +3,7 @@ import { sortByDate } from "@reactive-resume/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
 
+import { useChatSessions } from "@/client/services/chat";
 import { useResumes } from "@/client/services/resume";
 
 import { ConvversationView } from "./_components/conversation-item";
@@ -13,6 +14,10 @@ import { StatisticsCard } from "./_components/statistics-card";
 
 export const ListView = () => {
   const { resumes, loading } = useResumes();
+  const { chatSessions } = useChatSessions();
+
+  console.log("test", chatSessions);
+  // Mock data for demonstration
 
   return (
     <div className="p-4">

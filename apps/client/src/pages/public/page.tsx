@@ -15,7 +15,6 @@ export const PublicResumePage = () => {
   const frameRef = useRef<HTMLIFrameElement>(null);
   const { printResume, loading } = usePrintResume();
   const { id, title, data: resume } = useLoaderData() as ResumeDto;
-  const format = resume.metadata.page.format;
 
   const updateResumeInFrame = useCallback(() => {
     if (!frameRef.current || !frameRef.current.contentWindow) return;

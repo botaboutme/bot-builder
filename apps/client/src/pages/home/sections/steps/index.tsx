@@ -1,3 +1,4 @@
+/* eslint-disable lingui/no-unlocalized-strings */
 const STEPS = [
   { title: "Upload your resume", text: "or create from scratch" },
   { title: "Preview your details", text: "and make edits" },

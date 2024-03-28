@@ -1,5 +1,6 @@
 export * from "./auth";
 export * from "./chat";
+export * from "./chat";
 export * from "./contributors";
 export * from "./resume";
 export * from "./secrets";
