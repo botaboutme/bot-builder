@@ -33,6 +33,7 @@ import { UtilsService } from "../utils/utils.service";
 import { AuthService } from "./auth.service";
 import { GitHubGuard } from "./guards/github.guard";
 import { GoogleGuard } from "./guards/google.guard";
+import { LinkedInGuard } from "./guards/linkedin.guard";
 import { JwtGuard } from "./guards/jwt.guard";
 import { LocalGuard } from "./guards/local.guard";
 import { RefreshGuard } from "./guards/refresh.guard";
@@ -140,6 +141,23 @@ export class AuthController {
   @Get("google/callback")
   @UseGuards(GoogleGuard)
   async googleCallback(
+    @User() user: UserWithSecrets,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return this.handleAuthenticationResponse(user, response, false, true);
+  }
+
+  @ApiTags("OAuth", "LinkedIn")
+  @Get("linkedin")
+  @UseGuards(LinkedInGuard)
+  linkedinLogin() {
+    return;
+  }
+
+  @ApiTags("OAuth", "LinkedIn")
+  @Get("linkedin/callback")
+  @UseGuards(LinkedInGuard)
+  async linkedinCallback(
     @User() user: UserWithSecrets,
     @Res({ passthrough: true }) response: Response,
   ) {
