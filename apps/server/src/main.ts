@@ -44,6 +44,10 @@ async function bootstrap() {
   // Cookie Parser
   app.use(cookieParser());
 
+  //Linked In
+  var session = require('express-session');
+  app.use(session({ secret: 'SECRET' }));
+
   // CORS
   app.enableCors({
     credentials: true,
