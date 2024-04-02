@@ -5,6 +5,19 @@ import { Link } from "react-router-dom";
 
 import { useLogout } from "@/client/services/auth";
 import { useAuthStore } from "@/client/stores/auth";
+import ReactGA from "react-ga4";
+
+export const logData = () => {
+  // Send a custom event
+  ReactGA.event({
+    category: "ButtonClickAnalysis",
+    action: "GoToDashboard",
+    label: "Go to dashboard", // optional
+    value: 99, // optional, must be a number
+    nonInteraction: true, // optional, true/false
+    transport: "xhr", // optional, beacon/xhr/image
+  });
+};
 
 export const HeroCTA = () => {
   const { logout } = useLogout();
@@ -15,7 +28,11 @@ export const HeroCTA = () => {
     return (
       <>
         <Button className="btn-bckMain" asChild size="lg">
-          <Link className="btn-bckMain" to="/dashboard">{t`Go to Dashboard`}</Link>
+          <Link
+            className="btn-bckMain"
+            to="/dashboard"
+            onClick={() => logData()}
+          >{t`Go to Dashboard`}</Link>
         </Button>
 
         <Button size="lg" variant="link" onClick={() => logout()}>
