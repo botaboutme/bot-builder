@@ -6,6 +6,25 @@ import { processUsername } from '@reactive-resume/utils';
 import { ErrorMessage } from '@reactive-resume/utils';
 
 import { UserService } from '@/server/user/user.service';
+import { MissingPageContentsEmbeddingError } from 'pdf-lib';
+import {
+  AuthenticateOptions as PassportAuthenticateOptions,
+  Profile as passportProfile,
+} from "passport";
+
+export interface LinkedInProfile extends passportProfile {
+  id: string;
+  displayName: string;
+  email: string;
+  name: {
+      familyName: string;
+      givenName: string;
+  };
+  emails: [{ value: string }];
+  photos: [{ value: string }];
+  _raw: string;
+  _json: any;
+}
 
 @Injectable()
 export class LinkedInStrategy extends PassportStrategy(Strategy, 'linkedin') {
@@ -19,7 +38,8 @@ export class LinkedInStrategy extends PassportStrategy(Strategy, 'linkedin') {
       clientID,
       clientSecret,
       callbackURL,
-      scope: ['r_emailaddress', 'r_liteprofile'], // LinkedIn permissions for email and profile
+      //scope: ['r_emailaddress', 'r_liteprofile'], // LinkedIn permissions for email and profile
+      scope: ['openid','email', 'profile'], // LinkedIn permissions for email and profile
       state: true, // Use a state parameter for security purposes
     } as StrategyOption);
   }
@@ -27,18 +47,18 @@ export class LinkedInStrategy extends PassportStrategy(Strategy, 'linkedin') {
   async validate(
     _accessToken: string,
     _refreshToken: string,
-    profile: Profile,
+    profile: LinkedInProfile,
     done: (err?: string | Error | null, user?: Express.User, info?: unknown) => void,
   ) {
-    const { displayName, emails, photos } = profile;
+    console.log("&&&"+profile.id+profile.email+profile._raw);
+    const { displayName, email, photos } = profile;
 
-    const email = emails?.[0].value;
+    //const email = emails?.[0].value;
     const picture = photos?.[0].value;
 
     let user: User | null = null;
-
+    
     if (!email) throw new BadRequestException(ErrorMessage.OAuthUser);
-
     try {
       user = await this.userService.findOneByIdentifier(email);
 
