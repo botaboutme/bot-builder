@@ -4,7 +4,7 @@ import { defaultItem, defaultUrl, itemSchema, urlSchema } from "../shared";
 
 // Schema
 export const educationSchema = itemSchema.extend({
-  institution: z.string().min(1),
+  institution: z.string().min(1).default("N/A"),
   studyType: z.string(),
   area: z.string(),
   score: z.string(),
@@ -20,7 +20,7 @@ export type Education = z.infer<typeof educationSchema>;
 export const defaultEducation: Education = {
   ...defaultItem,
   id: "",
-  institution: "",
+  institution: "N/A",
   studyType: "",
   area: "",
   score: "",

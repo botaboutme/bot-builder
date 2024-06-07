@@ -1,13 +1,11 @@
+import { RedisChatMessageHistory } from "@langchain/community/stores/message/ioredis";
 import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
-import { ChatOpenAI } from "@langchain/openai";
-import { RedisChatMessageHistory } from "@langchain/redis";
+import { ChatMistralAI } from "@langchain/mistralai";
 import { Injectable } from "@nestjs/common";
 import { ChatDto } from "@reactive-resume/dto";
 import { MessageData } from "@reactive-resume/schema";
-import { BufferMemory } from "langchain/memory";
 import { PrismaService } from "nestjs-prisma";
-import { createClient } from "redis";
 import { Socket } from "socket.io";
 
 import { ResumeService } from "../resume/resume.service";
@@ -45,9 +43,13 @@ export class ChatService {
       },
     });
 
-    const model = new ChatOpenAI({
-      openAIApiKey: process.env.OPENAI_API_KEY, // Ensure you've set your API key in the environment variables
-      modelName: "gpt-4-0125-preview",
+    // const model = new ChatOpenAI({
+    //   openAIApiKey: process.env.OPENAI_API_KEY, // Ensure you've set your API key in the environment variables
+    //   modelName: "gpt-4-0125-preview",
+    // });
+    const model = new ChatMistralAI({
+      apiKey: process.env.MISTRAL_API_KEY,
+      modelName: "mistral-large-latest",
     });
     const systemPromptRaw =
       "You are a helpful bot who talks about the given profile.The profile is given in the following json format \n" +
@@ -65,15 +67,15 @@ export class ChatService {
     const chain = prompt.pipe(model);
     // Default "inputKey", "outputKey", and "memoryKey values would work here
     // but we specify them for clarity.
-    const memory = new BufferMemory({
-      chatHistory: new RedisChatMessageHistory({
-        sessionId: client.id, // Or some other unique identifier for the conversation
-        sessionTTL: 300, // 5 minutes, omit this parameter to make sessions never expire
-        client: createClient({ url: process.env.REDIS_URL }), // Default value, override with your own instance's URL
-      }),
-    });
+    // const memory = new BufferMemory({
+    //   chatHistory: new RedisChatMessageHistory({
+    //     sessionId: client.id, // Or some other unique identifier for the conversation
+    //     sessionTTL: 300, // 5 minutes, omit this parameter to make sessions never expire
+    //     client: createClient({ url: process.env.REDIS_URL }), // Default value, override with your own instance's URL
+    //   }),
+    // });
 
-    console.log(await memory.loadMemoryVariables({}));
+    // console.log(await memory.loadMemoryVariables({}));
 
     const chainWithHistory = new RunnableWithMessageHistory({
       runnable: chain,
@@ -81,7 +83,7 @@ export class ChatService {
         new RedisChatMessageHistory({
           sessionId: sessionId, // Or some other unique identifier for the conversation
           sessionTTL: 300, // 5 minutes, omit this parameter to make sessions never expire
-          client: createClient({ url: process.env.REDIS_URL }), // Default value, override with your own instance's URL
+          url: process.env.REDIS_URL, // Default value, override with your own instance's URL
         }),
       inputMessagesKey: "question",
       historyMessagesKey: "history",
@@ -135,64 +137,64 @@ export class ChatService {
     }
   }
 
-  // Mock data for demonstration
-  private mockSessions = [
-    {
-      _id: "chat456",
-      userId: "user456",
-      participants: ["user456", "anonymous"],
-      created_at: "2024-02-25T16:00:00Z",
-      last_message_at: "2024-02-26T12:05:00Z",
-      last_message_preview: "Hey, how are you doingxxx?",
-    },
-    {
-      _id: "chat123",
-      userId: "user123",
-      participants: ["user123", "anonymous"],
-      created_at: "2024-02-26T16:00:00Z",
-      last_message_at: "2024-02-26T12:05:00Z",
-      last_message_preview: "Does he have skills on Chat?",
-    },
-    {
-      _id: "chat789",
-      userId: "user789",
-      participants: ["user789", "anonymous"],
-      created_at: "2024-02-26T16:00:00Z",
-      last_message_at: "2024-02-26T12:05:00Z",
-      last_message_preview: "What languageus does he speak?",
-    },
-  ];
+  // // Mock data for demonstration
+  // private mockSessions = [
+  //   {
+  //     _id: "chat456",
+  //     userId: "user456",
+  //     participants: ["user456", "anonymous"],
+  //     created_at: "2024-02-25T16:00:00Z",
+  //     last_message_at: "2024-02-26T12:05:00Z",
+  //     last_message_preview: "Hey, how are you doingxxx?",
+  //   },
+  //   {
+  //     _id: "chat123",
+  //     userId: "user123",
+  //     participants: ["user123", "anonymous"],
+  //     created_at: "2024-02-26T16:00:00Z",
+  //     last_message_at: "2024-02-26T12:05:00Z",
+  //     last_message_preview: "Does he have skills on Chat?",
+  //   },
+  //   {
+  //     _id: "chat789",
+  //     userId: "user789",
+  //     participants: ["user789", "anonymous"],
+  //     created_at: "2024-02-26T16:00:00Z",
+  //     last_message_at: "2024-02-26T12:05:00Z",
+  //     last_message_preview: "What languageus does he speak?",
+  //   },
+  // ];
 
-  private mockMessages = [
-    {
-      _id: "message1",
-      chat_id: "chat456",
-      sender_id: "anonymous",
-      text: "Hey, how are you doing?",
-      created_at: "2024-02-26T12:05:00Z",
-      read_by: ["user456"],
-      attachments: [],
-    },
-    // Add more message objects as needed
-  ];
+  // private mockMessages = [
+  //   {
+  //     _id: "message1",
+  //     chat_id: "chat456",
+  //     sender_id: "anonymous",
+  //     text: "Hey, how are you doing?",
+  //     created_at: "2024-02-26T12:05:00Z",
+  //     read_by: ["user456"],
+  //     attachments: [],
+  //   },
+  //   // Add more message objects as needed
+  // ];
 
-  // Method to retrieve sessions for a user
-  async getSessionsForUser(userId: string) {
-    try {
-      return this.mockSessions.filter((session) => session.userId === userId);
-    } catch (error) {
-      return [];
-    }
-  }
+  // // Method to retrieve sessions for a user
+  // async getSessionsForUser(userId: string) {
+  //   try {
+  //     return this.mockSessions.filter((session) => session.userId === userId);
+  //   } catch (error) {
+  //     return [];
+  //   }
+  // }
 
-  // Method to retrieve messages for a session
-  async getMessagesForSession(chatId: string) {
-    try {
-      return this.mockMessages.filter((message) => message.chat_id === chatId);
-    } catch (error) {
-      return [];
-    }
-  }
+  // // Method to retrieve messages for a session
+  // async getMessagesForSession(chatId: string) {
+  //   try {
+  //     return this.mockMessages.filter((message) => message.chat_id === chatId);
+  //   } catch (error) {
+  //     return [];
+  //   }
+  // }
 
   async getAllChatsForUser(userId: string): Promise<ChatDto[]> {
     try {

@@ -1,6 +1,6 @@
 import { PromptTemplate } from "@langchain/core/prompts";
 import { RunnableSequence } from "@langchain/core/runnables";
-import { ChatOpenAI, OpenAI } from "@langchain/openai";
+import { ChatOpenAI } from "@langchain/openai";
 import {
   BadRequestException,
   Injectable,
@@ -78,6 +78,28 @@ export class ResumeService {
         data: importResumeDto.data,
         title: importResumeDto.title || randomTitle,
         slug: importResumeDto.slug || kebabCase(randomTitle),
+      },
+    });
+
+    await Promise.all([
+      this.redis.del(`user:${userId}:resumes`),
+      this.redis.set(`user:${userId}:resume:${resume.id}`, JSON.stringify(resume)),
+    ]);
+
+    return resume;
+  }
+
+  async importWithURL(userId: string, url: string, importResumeDto: ImportResumeDto) {
+    const randomTitle = generateRandomName();
+
+    const resume = await this.prisma.resume.create({
+      data: {
+        userId,
+        visibility: "private",
+        data: importResumeDto.data,
+        title: importResumeDto.title || randomTitle,
+        slug: importResumeDto.slug || kebabCase(randomTitle),
+        originalDocumentURL: url,
       },
     });
 
@@ -214,12 +236,79 @@ export class ResumeService {
 
   async processUploadedResume(file: Express.Multer.File, userId: string) {
     const parser = StructuredOutputParser.fromZodSchema(resumeDataSchema);
+    const inputJsonFormat = `{
+      "personalInfo": {
+        "name": "Jane Doe",
+        "address": "123 Maple Street, Anytown, AN",
+        "contactNumber": "123-456-7890",
+        "email": "janedoe@email.com"
+      },
+      "summary": "An experienced project manager...",
+      "education": [
+        {
+          "institution": "University A",
+          "degree": "Bachelor of Science",
+          "fieldOfStudy": "Computer Science",
+          "graduationYear": 2010
+        }
+      ],
+      "workExperience": [
+        {
+          "companyName": "Tech Solutions Ltd",
+          "position": "Project Manager",
+          "startDate": "March 2015",
+          "endDate": "Present",
+          "responsibilities": [
+            "Lead a team of 10 developers",
+            "Manage project timelines"
+          ]
+        }
+      ],
+      "skills": ["Project Management", "Agile Methodologies"],
+      "certifications": [
+        {
+          "name": "Certified ScrumMaster",
+          "issuingOrganization": "Scrum Alliance",
+          "dateIssued": "April 2016"
+        }
+      ]
+    }
+`;
+
+    const promptText = `
+    Transform the given text of a professional profile into a structured JSON object. The profile includes various sections such as Personal Information, Summary, Education History, Work Experience, Skills, and Certifications. Your task is to ensure every piece of information is captured in the JSON without omissions, using appropriate and sensible key names that reflect the data accurately.
+    Personal Information: This section should be encapsulated under a personalInfo key. It includes the person's name, address, contact number, and email. Each of these should be a sub-key within personalInfo.
+    Summary: Summarize the professional’s career and objectives under a summary key. This should be a simple string capturing the essence of the individual's professional summary.
+    Education History: Place this under an education key. Each entry should be an object in an array, including keys for institution, degree, fieldOfStudy, and graduationYear.
+    Work Experience: Use a workExperience key. This section will also be an array of objects, each detailing a job role. Include keys for companyName, position, startDate, endDate, and responsibilities (the last one can be an array of strings for multiple duties).
+    Skills: Under a skills key, list all skills as an array of strings. Consider grouping related skills together if the profile is extensive, possibly using sub-arrays or sub-objects categorized by skill type (e.g., technical, soft skills).
+    Certifications: Use a certifications key. This will be an array of objects, each containing name, issuingOrganization, and dateIssued
+    The JSON structure should look something like this (simplified example):
+    \`\`\`json
+    ${inputJsonFormat.toString().replaceAll("{", "{".repeat(2)).replaceAll("}", "}".repeat(2))}
+    \`\`\`
+    Remember to validate the JSON for correctness and completeness. Ensure all dates follow a consistent format, and use null for any unknown or inapplicable values to maintain structure integrity.
+
+    input : {data}
+    `;
+
+    const chainInital = RunnableSequence.from([
+      PromptTemplate.fromTemplate(promptText),
+      new ChatOpenAI({
+        modelName: "gpt-4-1106-preview",
+        temperature: 0.1,
+      }),
+      //parser,
+    ]);
 
     const chain = RunnableSequence.from([
       PromptTemplate.fromTemplate(
-        "Extract as much data as possible from the given data.\n{format_instructions}\n{question}. \n Make sure that all the id feilds are unique strings.\n Make sure that you return a valid JSON. \n Remove Invalid ",
+        "You are given JSON data in one format. You have to convert it into a format defined in format instruction.\n Format Instraction : {format_instructions}\n{question}. \n Make sure that all the id feilds are unique strings.\n Make sure that you return a valid JSON. \n Remove Invalid. Do not remove anything for brevity. No Comments in the JSON. Dont be chatty. ",
       ),
-      new OpenAI({ modelName: "gpt-4", temperature: 0 }),
+      new ChatOpenAI({
+        modelName: "gpt-4-1106-preview",
+        temperature: 0.1,
+      }),
       //parser,
     ]);
 
@@ -229,19 +318,23 @@ export class ResumeService {
       // Placeholder for file processing and data extraction logic
       // You might use a third-party library or service here to extract resume data
       const extractedData = await this.extractDataFromFile(file);
-
+      console.log(extractedData);
+      const initialResponse = await chainInital.invoke({
+        data: extractedData,
+      });
+      console.log(initialResponse.content.toString());
       // Here you would typically store the extracted data in your database
       // This is a simplified example that just logs the extracted data
       const response = await chain.invoke({
-        question: extractedData,
+        question: initialResponse.content.toString(),
         format_instructions: parser.getFormatInstructions(),
       });
 
-      console.log(`Extracted data for user ${userId}`);
+      // console.log(`Extracted data for user ${userId}`);
       let strucOutput = {};
       try {
-        console.log(response);
-        const validJson = this.cleanupAndValidateJSON(response);
+        // console.log(response);
+        const validJson = this.cleanupAndValidateJSON(response.content.toString());
         if (validJson.isValid && validJson.cleanedJSON) {
           strucOutput = validJson.cleanedJSON;
         }
@@ -250,13 +343,13 @@ export class ResumeService {
         console.log(error);
       }
       const data = deepmerge(defaultResumeData, strucOutput);
-      console.log(" The Data is : " + JSON.stringify(data));
+      // console.log(" The Data is : " + JSON.stringify(data));
       return data;
     } catch (error) {
       Logger.error(`Error processing uploaded resume for user ${userId}: ${error.message}`);
       const fixParser = OutputFixingParser.fromLLM(new ChatOpenAI({ temperature: 0 }), parser);
       const output = await fixParser.parse(error.message);
-      console.log("Fixed output: ", output);
+      // console.log("Fixed output: ", output);
       return defaultResumeData;
     }
   }
@@ -303,6 +396,7 @@ export class ResumeService {
   }
 
   cleanupAndValidateJSON(input: string): { isValid: boolean; cleanedJSON?: Record<string, never> } {
+    console.log("Input : ", input);
     // Find the position of "```json" and "```"
     const startTagIndex = input.indexOf("```json");
     const endTagIndex = input.indexOf("```", startTagIndex + 1);
@@ -311,11 +405,14 @@ export class ResumeService {
     if (startTagIndex !== -1 && endTagIndex !== -1) {
       // Extract the JSON string between "```json" and "```"
       const jsonString = input.substring(startTagIndex + 7, endTagIndex).trim();
+      console.log("jsonString : ", jsonString);
 
       try {
         // Parse the extracted JSON string
         const cleanedJSON = JSON.parse(jsonString);
         // Return the cleaned JSON object and indicate that it's valid
+        console.log("output : ", jsonString);
+
         return { isValid: true, cleanedJSON };
       } catch (error) {
         // If parsing fails, indicate that the JSON is invalid

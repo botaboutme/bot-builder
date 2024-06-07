@@ -27,6 +27,7 @@ import { User } from "@/server/user/decorators/user.decorator";
 
 import { OptionalGuard } from "../auth/guards/optional.guard";
 import { TwoFactorGuard } from "../auth/guards/two-factor.guard";
+import { StorageService } from "../storage/storage.service";
 import { UtilsService } from "../utils/utils.service";
 import { Resume } from "./decorators/resume.decorator";
 import { ResumeGuard } from "./guards/resume.guard";
@@ -38,6 +39,7 @@ export class ResumeController {
   constructor(
     private readonly resumeService: ResumeService,
     private readonly utils: UtilsService,
+    private readonly storageService: StorageService,
   ) {}
 
   @Get("schema")
@@ -174,14 +176,21 @@ export class ResumeController {
   async uploadResume(@UploadedFile() file: Express.Multer.File, @User() user: UserEntity) {
     // Assuming you have a method in your ResumeService to handle the file processing
     try {
+      const url = await this.storageService.uploadRawObject(
+        user.id,
+        "rawresumes",
+        file.buffer,
+        undefined,
+        file.mimetype,
+      );
       const result = await this.resumeService.processUploadedResume(file, user.id);
       const parser = new ReactiveResumeParser();
       const isValid = parser.validate(result);
       const parsedData = parser.convert(result as ResumeData);
-      console.log("Is valid" + JSON.stringify(isValid, null, 2));
-      console.log("parsedData" + JSON.stringify(parsedData, null, 2));
+      // console.log("Is valid" + JSON.stringify(isValid, null, 2));
+      //console.log("parsedData" + JSON.stringify(parsedData, null, 2));
 
-      return await this.resumeService.import(user.id, { data: parsedData });
+      return await this.resumeService.importWithURL(user.id, url, { data: parsedData });
     } catch (error) {
       Logger.error(error);
       throw new InternalServerErrorException("Failed to process resume");

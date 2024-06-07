@@ -18,6 +18,15 @@ enum Visibility {
   private
 }
 
+enum Status {
+  Pending
+  Parsing
+  Parsed
+  Failed
+  Retrying
+  Error
+}
+
 model User {
   id               String   @id @default(cuid())
   name             String
@@ -60,6 +69,9 @@ model Resume {
   updatedAt  DateTime   @updatedAt
   chats      Chat[]
   Message    Message[]
+  status             Status    @default(Pending) // Add the status field
+  retries            Int       @default(0) // Add the retries field
+  originalDocumentURL String?   // Add the originalDocumentURL field
 
   @@unique([userId, id])
   @@unique([userId, slug])

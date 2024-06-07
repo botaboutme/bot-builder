@@ -16,7 +16,7 @@ import { Config } from "../config/schema";
 // and where `fileName` is a unique identifier (cuid) for the file.
 
 type ImageUploadType = "pictures" | "previews";
-type DocumentUploadType = "resumes";
+type DocumentUploadType = "resumes" | "rawresumes";
 export type UploadType = ImageUploadType | DocumentUploadType;
 
 const PUBLIC_ACCESS_POLICY = {
@@ -31,6 +31,7 @@ const PUBLIC_ACCESS_POLICY = {
         "arn:aws:s3:::{{bucketName}}/*/pictures/*",
         "arn:aws:s3:::{{bucketName}}/*/previews/*",
         "arn:aws:s3:::{{bucketName}}/*/resumes/*",
+        "arn:aws:s3:::{{bucketName}}/*/rawresumes/*",
       ],
     },
   ],
@@ -154,6 +155,33 @@ export class StorageService implements OnModuleInit {
     }
   }
 
+  async uploadRawObject(
+    userId: string,
+    type: UploadType,
+    buffer: Buffer,
+    filename: string = createId(),
+    fileMime: string,
+  ) {
+    const extension = this.getExtensionFromMimeType(fileMime);
+    const storageUrl = this.configService.get<string>("STORAGE_URL");
+    const filepath = `${userId}/${type}/${filename}.${extension}`;
+    const url = `${storageUrl}/${filepath}`;
+    const metadata = {
+      "Content-Type": `${fileMime}`,
+      "Content-Disposition": `attachment; filename=${filename}.${extension}`,
+    };
+
+    try {
+      await Promise.all([
+        this.client.putObject(this.bucketName, filepath, buffer, metadata),
+        this.redis.set(`user:${userId}:storage:${type}:${filename}`, url),
+      ]);
+
+      return url;
+    } catch (error) {
+      throw new InternalServerErrorException("There was an error while uploading the file.");
+    }
+  }
   async deleteObject(userId: string, type: UploadType, filename: string) {
     const extension = type === "resumes" ? "pdf" : "jpg";
     const path = `${userId}/${type}/${filename}.${extension}`;
@@ -185,6 +213,18 @@ export class StorageService implements OnModuleInit {
       throw new InternalServerErrorException(
         `There was an error while deleting the folder at the specified path: ${this.bucketName}/${prefix}.`,
       );
+    }
+  }
+  private getExtensionFromMimeType(mimeType: string): "doc" | "docx" | "pdf" {
+    switch (mimeType) {
+      case "application/msword":
+        return "doc";
+      case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+        return "docx";
+      case "application/pdf":
+        return "pdf";
+      default:
+        throw new Error(`Unsupported MIME type: ${mimeType}`);
     }
   }
 }
